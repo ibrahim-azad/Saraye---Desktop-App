@@ -249,7 +249,7 @@ public class HostBookingsController {
     private void mockApproveBooking(Booking booking) {
         // In real implementation: BookingService.approveBooking(booking.getBookingId());
         booking.setStatus("approved");
-        System.out.println("MOCK: Booking " + booking.getBookingId() + " approved");
+        System.out.println("MOCK: Booking " + booking.getBookingID() + " approved");
     }
 
     /**
@@ -258,7 +258,7 @@ public class HostBookingsController {
     private void mockDeclineBooking(Booking booking) {
         // In real implementation: BookingService.declineBooking(booking.getBookingId());
         booking.setStatus("declined");
-        System.out.println("MOCK: Booking " + booking.getBookingId() + " declined");
+        System.out.println("MOCK: Booking " + booking.getBookingID() + " declined");
     }
 
     /**
@@ -275,37 +275,42 @@ public class HostBookingsController {
     private List<Booking> getMockBookings() {
         List<Booking> bookings = new ArrayList<>();
 
-        Booking b1 = new Booking(1, 1, 101,
+        Booking b1 = new Booking("1", "101", "1",
                 LocalDate.of(2025, 12, 1), LocalDate.of(2025, 12, 5),
-                4, 60000, "pending");
+                60000, "pending");
+        b1.setNumGuests(4);
         b1.setGuestName("Ali Khan");
         b1.setPropertyTitle("Luxury Apartment in DHA");
         bookings.add(b1);
 
-        Booking b2 = new Booking(2, 2, 102,
+        Booking b2 = new Booking("2", "102", "2",
                 LocalDate.of(2025, 12, 10), LocalDate.of(2025, 12, 12),
-                2, 16000, "pending");
+                16000, "pending");
+        b2.setNumGuests(2);
         b2.setGuestName("Sara Ahmed");
         b2.setPropertyTitle("Cozy Studio in Gulberg");
         bookings.add(b2);
 
-        Booking b3 = new Booking(3, 1, 103,
+        Booking b3 = new Booking("3", "103", "1",
                 LocalDate.of(2025, 11, 25), LocalDate.of(2025, 11, 28),
-                6, 45000, "approved");
+                45000, "approved");
+        b3.setNumGuests(6);
         b3.setGuestName("Usman Tariq");
         b3.setPropertyTitle("Luxury Apartment in DHA");
         bookings.add(b3);
 
-        Booking b4 = new Booking(4, 2, 104,
+        Booking b4 = new Booking("4", "104", "2",
                 LocalDate.of(2025, 11, 20), LocalDate.of(2025, 11, 22),
-                2, 16000, "declined");
+                16000, "declined");
+        b4.setNumGuests(2);
         b4.setGuestName("Ayesha Malik");
         b4.setPropertyTitle("Cozy Studio in Gulberg");
         bookings.add(b4);
 
-        Booking b5 = new Booking(5, 5, 105,
+        Booking b5 = new Booking("5", "105", "5",
                 LocalDate.of(2025, 12, 15), LocalDate.of(2025, 12, 20),
-                4, 50000, "pending");
+                50000, "pending");
+        b5.setNumGuests(4);
         b5.setGuestName("Hassan Raza");
         b5.setPropertyTitle("Modern Flat in Johar");
         bookings.add(b5);

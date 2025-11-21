@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Property;
 import models.User;
+import models.Address;
 import ui.utils.AlertUtil;
 import ui.utils.NavigationUtil;
 import ui.utils.ValidationUtil;
@@ -247,20 +248,55 @@ public class SearchPropertiesController {
     private List<Property> getMockProperties() {
         List<Property> properties = new ArrayList<>();
 
-        properties.add(new Property(1, 2, "Luxury Apartment in DHA", "Beautiful 3BR apartment",
-                "DHA Phase 5", "Lahore", 15000, 6, 3, 2, "WiFi, AC, Parking", "available"));
+        // Property 1: Luxury Apartment in DHA
+        Address addr1 = new Address("1", "DHA Phase 5", "Lahore", "Pakistan", "54000");
+        Property p1 = new Property("1", "2", "Luxury Apartment in DHA", 15000, addr1);
+        p1.setDescription("Beautiful 3BR apartment");
+        p1.setMaxGuests(6);
+        p1.setBedrooms(3);
+        p1.setBathrooms(2);
+        p1.setStatus("available");
+        properties.add(p1);
 
-        properties.add(new Property(2, 2, "Cozy Studio in Gulberg", "Modern studio apartment",
-                "Gulberg III", "Lahore", 8000, 2, 1, 1, "WiFi, Kitchen", "available"));
+        // Property 2: Cozy Studio in Gulberg
+        Address addr2 = new Address("2", "Gulberg III", "Lahore", "Pakistan", "54000");
+        Property p2 = new Property("2", "2", "Cozy Studio in Gulberg", 8000, addr2);
+        p2.setDescription("Modern studio apartment");
+        p2.setMaxGuests(2);
+        p2.setBedrooms(1);
+        p2.setBathrooms(1);
+        p2.setStatus("available");
+        properties.add(p2);
 
-        properties.add(new Property(3, 3, "Beach House in Clifton", "Stunning sea view",
-                "Clifton Block 2", "Karachi", 25000, 8, 4, 3, "Pool, WiFi, Sea View", "available"));
+        // Property 3: Beach House in Clifton
+        Address addr3 = new Address("3", "Clifton Block 2", "Karachi", "Pakistan", "75600");
+        Property p3 = new Property("3", "3", "Beach House in Clifton", 25000, addr3);
+        p3.setDescription("Stunning sea view");
+        p3.setMaxGuests(8);
+        p3.setBedrooms(4);
+        p3.setBathrooms(3);
+        p3.setStatus("available");
+        properties.add(p3);
 
-        properties.add(new Property(4, 3, "Family Home in Bahria", "Spacious family house",
-                "Bahria Town", "Islamabad", 12000, 5, 3, 2, "Garden, Parking, WiFi", "available"));
+        // Property 4: Family Home in Bahria
+        Address addr4 = new Address("4", "Bahria Town", "Islamabad", "Pakistan", "44000");
+        Property p4 = new Property("4", "3", "Family Home in Bahria", 12000, addr4);
+        p4.setDescription("Spacious family house");
+        p4.setMaxGuests(5);
+        p4.setBedrooms(3);
+        p4.setBathrooms(2);
+        p4.setStatus("available");
+        properties.add(p4);
 
-        properties.add(new Property(5, 2, "Modern Flat in Johar", "Contemporary 2BR flat",
-                "Johar Town", "Lahore", 10000, 4, 2, 2, "WiFi, AC, Gym", "available"));
+        // Property 5: Modern Flat in Johar
+        Address addr5 = new Address("5", "Johar Town", "Lahore", "Pakistan", "54000");
+        Property p5 = new Property("5", "2", "Modern Flat in Johar", 10000, addr5);
+        p5.setDescription("Contemporary 2BR flat");
+        p5.setMaxGuests(4);
+        p5.setBedrooms(2);
+        p5.setBathrooms(2);
+        p5.setStatus("available");
+        properties.add(p5);
 
         return properties;
     }

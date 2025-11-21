@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.Property;
 import models.User;
+import models.Address;
 import ui.utils.AlertUtil;
 import ui.utils.NavigationUtil;
 import ui.utils.ValidationUtil;
+import java.util.UUID;
 
 /**
  * AddPropertyController - Handles adding new property listings
@@ -214,21 +216,30 @@ public class AddPropertyController {
         //                                address, city, price, maxGuests, bedrooms,
         //                                bathrooms, amenities);
 
-        // Create a mock property object for demonstration
-        Property newProperty = new Property(
-            999, // Mock property ID
-            currentUser != null ? currentUser.getUserId() : 0,
-            title,
-            description,
+        // Create Address object
+        Address propertyAddress = new Address(
+            UUID.randomUUID().toString(),
             address,
             city,
-            price,
-            maxGuests,
-            bedrooms,
-            bathrooms,
-            amenities,
-            "available"
+            "Pakistan",  // Default country
+            ""  // Zip code (can be added to form later)
         );
+
+        // Create a mock property object for demonstration
+        Property newProperty = new Property(
+            UUID.randomUUID().toString(),  // Property ID
+            currentUser != null ? currentUser.getUserId() : "0",  // Host ID
+            title,
+            price,
+            propertyAddress
+        );
+
+        // Set additional fields
+        newProperty.setDescription(description);
+        newProperty.setMaxGuests(maxGuests);
+        newProperty.setBedrooms(bedrooms);
+        newProperty.setBathrooms(bathrooms);
+        newProperty.setStatus("available");
 
         System.out.println("MOCK: Property created with ID " + newProperty.getPropertyId());
         System.out.println("      Title: " + newProperty.getTitle());

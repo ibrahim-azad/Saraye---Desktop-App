@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import models.Property;
 import models.User;
+import models.Amenity;
 import ui.utils.NavigationUtil;
+import java.util.stream.Collectors;
 
 /**
  * PropertyDetailsController - Displays detailed property information
@@ -72,13 +74,22 @@ public class PropertyDetailsController {
         }
 
         titleLabel.setText(currentProperty.getTitle());
-        addressLabel.setText(currentProperty.getAddress() + ", " + currentProperty.getCity());
+        addressLabel.setText(currentProperty.getAddress().getFullAddress());
         priceLabel.setText(String.format("%,.0f", currentProperty.getPricePerNight()));
         guestsLabel.setText(String.valueOf(currentProperty.getMaxGuests()));
         bedroomsLabel.setText(String.valueOf(currentProperty.getBedrooms()));
         bathroomsLabel.setText(String.valueOf(currentProperty.getBathrooms()));
         descriptionLabel.setText(currentProperty.getDescription());
-        amenitiesLabel.setText(currentProperty.getAmenities());
+
+        // Convert amenities list to comma-separated string
+        if (currentProperty.getAmenities() != null && !currentProperty.getAmenities().isEmpty()) {
+            String amenitiesStr = currentProperty.getAmenities().stream()
+                .map(Amenity::getName)
+                .collect(Collectors.joining(", "));
+            amenitiesLabel.setText(amenitiesStr);
+        } else {
+            amenitiesLabel.setText("No amenities listed");
+        }
     }
 
     /**
