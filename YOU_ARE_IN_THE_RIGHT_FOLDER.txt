@@ -1,0 +1,23 @@
+✅ YOU FOUND IT!
+
+This is the correct project folder: 
+C:\Users\raffa\Desktop\Saraye---Desktop-App
+
+All your UI code is here!
+
+Files created:
+- src/ui/controllers/LoginController.java
+- src/ui/views/login.fxml
+- src/ui/utils/NavigationUtil.java
+- src/ui/utils/AlertUtil.java
+- src/ui/utils/ValidationUtil.java
+- src/models/User.java
+- src/models/Property.java
+- src/models/Booking.java
+- src/Main.java
+- resources/css/style.css
+- compile.bat
+- run.bat
+- compile-and-run.bat
+
+If you see this file, you're in the right place!

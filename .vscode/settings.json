@@ -1,11 +1,11 @@
 {
-    "_comment": "TEAM: Replace CHANGE_THIS_PATH with your JavaFX SDK path. Windows: C:/javafx-sdk-21.0.5/lib Mac: /Users/yourname/javafx-sdk-21.0.5/lib",
+    "_comment": "JavaFX SDK configured for C:/Java/javafx-sdk-21.0.9",
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
     ],
-    "java.debug.settings.vmArgs": "--module-path \"CHANGE_THIS_PATH\" --add-modules javafx.controls,javafx.fxml",
+    "java.debug.settings.vmArgs": "--module-path \"C:/Java/javafx-sdk-21.0.9/lib\" --add-modules javafx.controls,javafx.fxml",
     "java.configuration.updateBuildConfiguration": "automatic",
     "files.exclude": {
         "**/.classpath": true,

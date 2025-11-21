@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.controllers.BookingRequestController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
+            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="← Back to Property"
+                    onAction="#handleBack"
+                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+        </HBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="20" style="-fx-padding: 20; -fx-max-width: 700; -fx-alignment: center;">
+
+                <!-- Page Title -->
+                <VBox spacing="10" alignment="CENTER">
+                    <Label text="Request Booking" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <Label text="Fill in the details below to book this property" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Property Summary Card -->
+                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+                    <Label text="Property Summary" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label fx:id="propertyTitleLabel" text="Property Title" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <Label fx:id="propertyCityLabel" text="City, Address" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                        </VBox>
+                        <VBox spacing="5" alignment="CENTER_RIGHT">
+                            <Label text="Price per Night" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+                            <HBox spacing="5" alignment="CENTER_RIGHT">
+                                <Label text="PKR" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"/>
+                                <Label fx:id="pricePerNightLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Booking Details Form -->
+                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+                    <Label text="Booking Details" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+                    <GridPane hgap="15" vgap="15">
+                        <!-- Check-in Date -->
+                        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5">
+                            <Label text="Check-in Date *" style="-fx-font-weight: bold;"/>
+                            <DatePicker fx:id="checkInDatePicker"
+                                       promptText="Select check-in date"
+                                       style="-fx-padding: 10;"
+                                       onAction="#handleDateChange"
+                                       maxWidth="Infinity"/>
+                        </VBox>
+
+                        <!-- Check-out Date -->
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
+                            <Label text="Check-out Date *" style="-fx-font-weight: bold;"/>
+                            <DatePicker fx:id="checkOutDatePicker"
+                                       promptText="Select check-out date"
+                                       style="-fx-padding: 10;"
+                                       onAction="#handleDateChange"
+                                       maxWidth="Infinity"/>
+                        </VBox>
+
+                        <!-- Number of Guests -->
+                        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5">
+                            <Label text="Number of Guests *" style="-fx-font-weight: bold;"/>
+                            <TextField fx:id="numGuestsField"
+                                      promptText="e.g., 2"
+                                      style="-fx-padding: 10;"/>
+                        </VBox>
+
+                        <!-- Number of Nights (Calculated) -->
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5">
+                            <Label text="Number of Nights" style="-fx-font-weight: bold;"/>
+                            <TextField fx:id="numNightsField"
+                                      editable="false"
+                                      style="-fx-padding: 10; -fx-background-color: #ecf0f1;"/>
+                        </VBox>
+                    </GridPane>
+                </VBox>
+
+                <!-- Price Breakdown -->
+                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+                    <Label text="Price Breakdown" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+                    <VBox spacing="10">
+                        <HBox>
+                            <Label text="Price per night:" HBox.hgrow="ALWAYS" style="-fx-text-fill: #7f8c8d;"/>
+                            <Label fx:id="priceDetailLabel" text="PKR 0" style="-fx-font-weight: bold;"/>
+                        </HBox>
+
+                        <HBox>
+                            <Label text="Number of nights:" HBox.hgrow="ALWAYS" style="-fx-text-fill: #7f8c8d;"/>
+                            <Label fx:id="nightsDetailLabel" text="0" style="-fx-font-weight: bold;"/>
+                        </HBox>
+
+                        <Separator/>
+
+                        <HBox>
+                            <Label text="TOTAL PRICE:" HBox.hgrow="ALWAYS" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <Label fx:id="totalPriceLabel" text="PKR 0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Submit Button -->
+                <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+                    <Button text="Cancel"
+                            onAction="#handleBack"
+                            style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 12 30; -fx-font-size: 16px; -fx-background-radius: 5;"/>
+                    <Button text="📅 Submit Booking Request"
+                            onAction="#handleSubmitBooking"
+                            style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 12 30; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
