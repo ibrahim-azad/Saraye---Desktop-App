@@ -1,58 +1,41 @@
 package models;
 
-/**
- * Property Model - Temporary placeholder for UI
- * Will be replaced by Ibrahim's business logic implementation
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class Property {
-    private int propertyId;
-    private int hostId;
+    private String propertyID;
+    private String hostID;
     private String title;
     private String description;
-    private String address;
-    private String city;
     private double pricePerNight;
-    private int maxGuests;
-    private int bedrooms;
-    private int bathrooms;
-    private String amenities;
-    private String status; // "available", "unavailable"
 
-    // Constructors
-    public Property() {}
+    // ✅ COMPOSITION: Property HAS-A Address (Strong relationship)
+    private Address address;
 
-    public Property(int propertyId, int hostId, String title, String description,
-                    String address, String city, double pricePerNight, int maxGuests,
-                    int bedrooms, int bathrooms, String amenities, String status) {
-        this.propertyId = propertyId;
-        this.hostId = hostId;
+    // ✅ AGGREGATION: Property HAS-MANY Amenities (Weaker relationship)
+    private List<Amenity> amenities;
+
+    public Property(String propertyID, String hostID, String title, double price, Address address) {
+        this.propertyID = propertyID;
+        this.hostID = hostID;
         this.title = title;
-        this.description = description;
+        this.pricePerNight = price;
         this.address = address;
-        this.city = city;
-        this.pricePerNight = pricePerNight;
-        this.maxGuests = maxGuests;
-        this.bedrooms = bedrooms;
-        this.bathrooms = bathrooms;
-        this.amenities = amenities;
-        this.status = status;
+        this.amenities = new ArrayList<>();
+    }
+
+    public void addAmenity(Amenity amenity) {
+        this.amenities.add(amenity);
     }
 
     // Getters and Setters
-    public int getPropertyId() {
-        return propertyId;
+    public String getPropertyID() {
+        return propertyID;
     }
 
-    public void setPropertyId(int propertyId) {
-        this.propertyId = propertyId;
-    }
-
-    public int getHostId() {
-        return hostId;
-    }
-
-    public void setHostId(int hostId) {
-        this.hostId = hostId;
+    public String getHostID() {
+        return hostID;
     }
 
     public String getTitle() {
@@ -63,30 +46,6 @@ public class Property {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public double getPricePerNight() {
         return pricePerNight;
     }
@@ -95,53 +54,23 @@ public class Property {
         this.pricePerNight = pricePerNight;
     }
 
-    public int getMaxGuests() {
-        return maxGuests;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setMaxGuests(int maxGuests) {
-        this.maxGuests = maxGuests;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public int getBedrooms() {
-        return bedrooms;
-    }
-
-    public void setBedrooms(int bedrooms) {
-        this.bedrooms = bedrooms;
-    }
-
-    public int getBathrooms() {
-        return bathrooms;
-    }
-
-    public void setBathrooms(int bathrooms) {
-        this.bathrooms = bathrooms;
-    }
-
-    public String getAmenities() {
+    public List<Amenity> getAmenities() {
         return amenities;
     }
 
-    public void setAmenities(String amenities) {
-        this.amenities = amenities;
+    public String getDescription() {
+        return description;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Property{" +
-                "propertyId=" + propertyId +
-                ", title='" + title + '\'' +
-                ", city='" + city + '\'' +
-                ", pricePerNight=" + pricePerNight +
-                '}';
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
