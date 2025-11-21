@@ -1,0 +1,76 @@
+package models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Property {
+    private String propertyID;
+    private String hostID;
+    private String title;
+    private String description;
+    private double pricePerNight;
+
+    // ✅ COMPOSITION: Property HAS-A Address (Strong relationship)
+    private Address address;
+
+    // ✅ AGGREGATION: Property HAS-MANY Amenities (Weaker relationship)
+    private List<Amenity> amenities;
+
+    public Property(String propertyID, String hostID, String title, double price, Address address) {
+        this.propertyID = propertyID;
+        this.hostID = hostID;
+        this.title = title;
+        this.pricePerNight = price;
+        this.address = address;
+        this.amenities = new ArrayList<>();
+    }
+
+    public void addAmenity(Amenity amenity) {
+        this.amenities.add(amenity);
+    }
+
+    // Getters and Setters
+    public String getPropertyID() {
+        return propertyID;
+    }
+
+    public String getHostID() {
+        return hostID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public double getPricePerNight() {
+        return pricePerNight;
+    }
+
+    public void setPricePerNight(double pricePerNight) {
+        this.pricePerNight = pricePerNight;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Amenity> getAmenities() {
+        return amenities;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}
