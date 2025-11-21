@@ -9,8 +9,13 @@ public class Booking {
     private String propertyID;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private int numGuests;
     private double totalPrice;
     private String status; // PENDING, CONFIRMED, CANCELLED
+
+    // Additional fields for UI display
+    private String guestName;
+    private String propertyTitle;
 
     // Constructor
     public Booking(String guestID, String propertyID, LocalDate checkIn, LocalDate checkOut, double price) {
@@ -70,5 +75,29 @@ public class Booking {
 
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
+    }
+
+    public int getNumGuests() {
+        return numGuests;
+    }
+
+    public void setNumGuests(int numGuests) {
+        this.numGuests = numGuests;
+    }
+
+    public String getGuestName() {
+        return guestName;
+    }
+
+    public void setGuestName(String guestName) {
+        this.guestName = guestName;
+    }
+
+    public String getPropertyTitle() {
+        return propertyTitle;
+    }
+
+    public void setPropertyTitle(String propertyTitle) {
+        this.propertyTitle = propertyTitle;
     }
 }

@@ -9,6 +9,10 @@ public class Property {
     private String title;
     private String description;
     private double pricePerNight;
+    private int maxGuests;
+    private int bedrooms;
+    private int bathrooms;
+    private String status;
 
     // ✅ COMPOSITION: Property HAS-A Address (Strong relationship)
     private Address address;
@@ -72,5 +76,46 @@ public class Property {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getMaxGuests() {
+        return maxGuests;
+    }
+
+    public void setMaxGuests(int maxGuests) {
+        this.maxGuests = maxGuests;
+    }
+
+    public int getBedrooms() {
+        return bedrooms;
+    }
+
+    public void setBedrooms(int bedrooms) {
+        this.bedrooms = bedrooms;
+    }
+
+    public int getBathrooms() {
+        return bathrooms;
+    }
+
+    public void setBathrooms(int bathrooms) {
+        this.bathrooms = bathrooms;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    // Convenience methods for UI compatibility
+    public String getPropertyId() {
+        return propertyID;
+    }
+
+    public String getCity() {
+        return address != null ? address.getCity() : "";
     }
 }

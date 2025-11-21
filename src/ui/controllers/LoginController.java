@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import models.User;
+import models.Guest;
+import models.Host;
 import ui.utils.AlertUtil;
 import ui.utils.NavigationUtil;
 import ui.utils.ValidationUtil;
@@ -146,32 +148,16 @@ public class LoginController {
         // Host: host@saraye.com / password123
 
         if (email.equals("guest@saraye.com") && password.equals("password123")) {
-            User user = new User();
-            user.setUserId(1);
-            user.setName("John Doe");
-            user.setEmail(email);
-            user.setPhone("+92-300-1234567");
-            user.setRole("guest");
-            return user;
+            return new Guest("1", "John Doe", email, password, "+92-300-1234567");
         }
 
         if (email.equals("host@saraye.com") && password.equals("password123")) {
-            User user = new User();
-            user.setUserId(2);
-            user.setName("Jane Smith");
-            user.setEmail(email);
-            user.setPhone("+92-300-7654321");
-            user.setRole("host");
-            return user;
+            return new Host("2", "Jane Smith", email, password, "+92-300-7654321");
         }
 
         if (email.equals("both@saraye.com") && password.equals("password123")) {
-            User user = new User();
-            user.setUserId(3);
-            user.setName("Ali Ahmed");
-            user.setEmail(email);
-            user.setPhone("+92-300-1111111");
-            user.setRole("both");
+            // For "both" role, we'll return a Guest but could also implement a separate class
+            Guest user = new Guest("3", "Ali Ahmed", email, password, "+92-300-1111111");
             return user;
         }
 

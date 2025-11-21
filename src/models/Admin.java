@@ -1,13 +1,13 @@
 package models;
 
 public class Admin extends User implements Notifiable {
-    public Admin(String userID, String name, String email, String password) {
-        super(userID, name, email, password);
+    public Admin(String userID, String name, String email, String password, String phone) {
+        super(userID, name, email, password, phone);
     }
 
     @Override
     public String getRole() {
-        return "ADMIN";
+        return "admin";
     }
 
     @Override

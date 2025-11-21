@@ -14,15 +14,15 @@ public class UserDAO {
     public boolean saveUser(User user) {
         String sql = "INSERT INTO Users (userID, name, email, passwordHash, role, phoneNumber, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, SYSDATETIME())";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, user.getUserID());
+            stmt.setString(1, user.getUserId());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getPassword()); // Hash this in production!
             stmt.setString(5, user.getRole());
 
             // Handle optional fields safely
-            if (user instanceof Host) {
-                stmt.setString(6, ((Host) user).getPhoneNumber()); // Assuming Host has this field
+            if (user.getPhone() != null) {
+                stmt.setString(6, user.getPhone());
             } else {
                 stmt.setNull(6, Types.NVARCHAR);
             }
@@ -46,14 +46,15 @@ public class UserDAO {
                     String id = rs.getString("userID");
                     String name = rs.getString("name");
                     String pass = rs.getString("passwordHash");
+                    String phone = rs.getString("phoneNumber");
 
                     // Factory logic to return specific subclass
                     if ("HOST".equalsIgnoreCase(role)) {
-                        return new Host(id, name, email, pass);
+                        return new Host(id, name, email, pass, phone);
                     } else if ("GUEST".equalsIgnoreCase(role)) {
-                        return new Guest(id, name, email, pass);
+                        return new Guest(id, name, email, pass, phone);
                     } else if ("ADMIN".equalsIgnoreCase(role)) {
-                        return new Admin(id, name, email, pass);
+                        return new Admin(id, name, email, pass, phone);
                     }
                 }
             }
