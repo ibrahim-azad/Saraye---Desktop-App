@@ -7,15 +7,13 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static DatabaseConnection instance;
     private Connection connection;
-    // Connection String for MS SQL Server (Integrated Security=false usually for simple setups)
-    // Ensure TCP/IP is enabled in SQL Server Configuration Manager
-    private String url = "jdbc:sqlserver://localhost:1433;databaseName=SarayeDB;encrypt=true;trustServerCertificate=true;";
-    private String username = "sa"; // Or your SSMS username
-    private String password = "yourStrongPassword123"; // Or your SSMS password
+
+    // Connection String for MS SQL Server with Windows Authentication
+    private String url = "jdbc:sqlserver://localhost:1433;databaseName=SarayeDB;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
 
     private DatabaseConnection() {
         try {
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url);
             System.out.println("✅ Database Connected Successfully!");
         } catch (SQLException e) {
             System.err.println("❌ Database Connection Failed: " + e.getMessage());
