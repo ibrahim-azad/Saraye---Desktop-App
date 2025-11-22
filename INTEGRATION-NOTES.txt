@@ -1,0 +1,237 @@
+================================================================================
+                    ⚠️ INTEGRATION NOTES - TEAM COORDINATION NEEDED
+================================================================================
+
+Date: November 22, 2025
+Status: UI Layer merged with Database Layer - COMPATIBILITY ISSUES FOUND
+
+================================================================================
+                    📊 WHAT WAS MERGED
+================================================================================
+
+✅ Abdul Raffay's UI Layer (10 screens, all controllers, utilities)
+✅ Omer's Database Layer (DAOs, models, SQL scripts)
+✅ Merge completed successfully - no Git conflicts remaining
+
+================================================================================
+                    ⚠️ MODEL COMPATIBILITY ISSUES
+================================================================================
+
+The UI layer and Database layer use DIFFERENT model structures.
+These need to be resolved before the application will compile/run.
+
+ISSUE 1: User Model Structure
+-------------------------------
+UI Layer expects (Raffay's original):
+- Concrete User class (not abstract)
+- getUserId() method (lowercase 'id')
+- getPhone() method (phone field exists)
+- getRole() method returning "guest", "host", or "both"
+- setUserId(), setPhone(), setRole() methods
+
+Database Layer has (Omer's implementation):
+- ABSTRACT User class
+- getUserID() method (uppercase 'ID')
+- NO phone field
+- Abstract getRole() method
+- Subclasses: Guest, Host, Admin (each implements getRole())
+
+Affected UI Files:
+- LoginController.java
+- RegisterController.java
+- GuestDashboardController.java
+- HostDashboardController.java
+- ProfileController.java
+
+ISSUE 2: Property Model Structure
+-----------------------------------
+UI Layer expects:
+- Simple Property with basic fields
+- getPricePerNight(), getMaxGuests(), etc.
+
+Database Layer has:
+- More complex Property model
+- May have different field names/types
+
+Affected UI Files:
+- SearchPropertiesController.java
+- PropertyDetailsController.java
+- AddPropertyController.java
+
+ISSUE 3: Booking Model Structure
+----------------------------------
+UI Layer expects:
+- Simple Booking with dates, guests, price
+- getGuestName(), getPropertyTitle() for display
+
+Database Layer has:
+- Different structure (needs verification)
+
+Affected UI Files:
+- BookingRequestController.java
+- HostBookingsController.java
+
+================================================================================
+                    ✅ RECOMMENDED SOLUTIONS
+================================================================================
+
+OPTION A: Update Database Models (Recommended)
+-----------------------------------------------
+Modify Omer's User.java to:
+1. Add phone field:
+   protected String phone;
+
+2. Add getter/setter:
+   public String getPhone() { return phone; }
+   public void setPhone(String phone) { this.phone = phone; }
+
+3. Either:
+   - Make User concrete (remove abstract keyword), OR
+   - Update UI to use Guest/Host subclasses instead of User
+
+4. Fix method naming:
+   - Rename getUserID() to getUserId() (lowercase 'id')
+   - OR update all UI controllers to use getUserID()
+
+OPTION B: Update UI Controllers
+--------------------------------
+Modify all UI controllers to:
+1. Use Guest/Host instead of User
+2. Call getUserID() instead of getUserId()
+3. Remove phone field usage (or add it to database models)
+4. Handle the abstract User class properly
+
+OPTION C: Hybrid Approach (Best for Now)
+-----------------------------------------
+1. Add phone field to User model (users need phone numbers anyway)
+2. Keep User abstract but add common fields
+3. Update UI controllers to use getUserID() (uppercase)
+4. Use Guest/Host classes where appropriate
+
+================================================================================
+                    🔧 IMMEDIATE ACTION ITEMS
+================================================================================
+
+FOR OMER (Database Layer):
+--------------------------
+□ Review User.java model
+□ Add phone field to User class if agreed
+□ Consider making getUserID() → getUserId() for consistency
+□ Share Property and Booking model structure with team
+□ Verify all required fields are present
+
+FOR RAFFAY (UI Layer):
+----------------------
+□ Coordinate with Omer on final model structure
+□ Update controllers to use correct method names (getUserID vs getUserId)
+□ Test compilation after model changes
+□ Update mock data to use Guest/Host classes
+□ Add phone field handling if it's added to models
+
+FOR IBRAHIM (Business Logic):
+------------------------------
+□ Review both model implementations
+□ Decide on final model structure
+□ Ensure services will work with chosen model design
+□ Coordinate interface between UI and Database layers
+
+================================================================================
+                    📋 FILES THAT NEED UPDATES
+================================================================================
+
+After models are finalized, these files will need updates:
+
+UI Controllers (Raffay):
+------------------------
+src/ui/controllers/LoginController.java - Line ~82 (getUserId, getRole)
+src/ui/controllers/RegisterController.java - Line ~109 (setUserId, setPhone)
+src/ui/controllers/GuestDashboardController.java - Line ~32 (getName)
+src/ui/controllers/HostDashboardController.java - Line ~40 (getName)
+src/ui/controllers/ProfileController.java - Lines ~60-75 (all getters)
+src/ui/controllers/SearchPropertiesController.java - Property usage
+src/ui/controllers/PropertyDetailsController.java - Property display
+src/ui/controllers/BookingRequestController.java - Booking creation
+src/ui/controllers/HostBookingsController.java - Booking display
+src/ui/controllers/AddPropertyController.java - Property creation
+
+Database Models (Omer):
+------------------------
+src/models/User.java - Add phone field, fix method names
+src/models/Guest.java - Verify compatibility
+src/models/Host.java - Verify compatibility
+src/models/Property.java - Verify all UI fields exist
+src/models/Booking.java - Verify all UI fields exist
+
+================================================================================
+                    🎯 NEXT STEPS FOR TEAM MEETING
+================================================================================
+
+1. DISCUSS MODEL DESIGN:
+   - Should User be abstract or concrete?
+   - Which naming convention: getUserId() vs getUserID()?
+   - What fields are needed in User? (name, email, password, phone, role?)
+   - How to handle Guest/Host distinction?
+
+2. AGREE ON STANDARDS:
+   - Method naming conventions
+   - Field naming conventions
+   - How to handle polymorphism (Guest/Host/Admin)
+
+3. ASSIGN UPDATES:
+   - Who updates models?
+   - Who updates UI controllers?
+   - Who tests integration?
+
+4. TIMELINE:
+   - When to complete model updates?
+   - When to test end-to-end?
+   - Presentation is November 24!
+
+================================================================================
+                    💡 TESTING AFTER INTEGRATION
+================================================================================
+
+After models are aligned, test these workflows:
+
+1. Compilation Test:
+   - Run: ./compile-and-run.bat
+   - Should compile without errors
+
+2. Authentication Test:
+   - Login should work with database
+   - Registration should save to database
+
+3. Property Search Test:
+   - Search should query database
+   - Display real properties
+
+4. Booking Flow Test:
+   - Create booking → save to database
+   - Host approve/decline → update database
+
+5. Profile Test:
+   - Display user from database
+   - Update profile → save to database
+
+================================================================================
+                    📞 CONTACT INFO
+================================================================================
+
+Abdul Raffay (UI) - 23I-0587
+Ibrahim Azad (Business Logic)
+M. Omer Khan (Database)
+
+Quick coordination needed before presentation on November 24!
+
+================================================================================
+                    ✅ CURRENT STATUS
+================================================================================
+
+✅ UI Layer: 100% complete (10 screens)
+✅ Database Layer: Complete (DAOs, models, SQL)
+⚠️  Integration: Needs model alignment
+⏳ Business Logic: In progress (Ibrahim)
+
+PRIORITY: Resolve model compatibility in next 24 hours!
+
+================================================================================

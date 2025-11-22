@@ -1,40 +1,41 @@
 import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import ui.utils.NavigationUtil;
 
+/**
+ * Main Application Entry Point
+ * Saraye - Property Rental Desktop Application
+ *
+ * Team:
+ * - Abdul Raffay (23I-0587) - UI Layer
+ * - Ibrahim Azad (23I-3049) - Business Logic Layer
+ * - M. Omer Khan (23I-0650) - Database Layer
+ */
 public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        // Create UI elements
-        Label titleLabel = new Label("🏠 Saraye - Property Rental System");
-        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        titleLabel.setStyle("-fx-text-fill: #2196F3;");
-        
-        Label statusLabel = new Label("✅ Setup Successful!");
-        statusLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 18));
-        statusLabel.setStyle("-fx-text-fill: #4CAF50;");
-        
-        Label teamLabel = new Label("Team: Ibrahim, Omer, Raffay");
-        teamLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
-        teamLabel.setStyle("-fx-text-fill: #666;");
-        
-        // Layout
-        VBox root = new VBox(20);
-        root.setAlignment(Pos.CENTER);
-        root.getChildren().addAll(titleLabel, statusLabel, teamLabel);
-        root.setStyle("-fx-background-color: #f5f5f5; -fx-padding: 40;");
-        
-        // Scene and Stage
-        Scene scene = new Scene(root, 600, 400);
-        primaryStage.setTitle("Saraye - Setup Test");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        try {
+            // Set application title
+            primaryStage.setTitle("Saraye - Property Rental Platform");
+            
+            // Set primary stage for navigation
+            NavigationUtil.setPrimaryStage(primaryStage);
+            
+            // Set minimum window size
+            primaryStage.setMinWidth(900);
+            primaryStage.setMinHeight(600);
+            
+            // Navigate to login screen
+            NavigationUtil.navigateTo("login.fxml");
+            
+            // Show the stage
+            primaryStage.show();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Failed to start application: " + e.getMessage());
+        }
     }
     
     public static void main(String[] args) {
