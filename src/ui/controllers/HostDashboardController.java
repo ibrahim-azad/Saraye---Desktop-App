@@ -56,15 +56,7 @@ public class HostDashboardController {
      */
     @FXML
     private void handleMyProperties() {
-        // TODO: Implement property listing screen
-        // For now, show a mock list
-        AlertUtil.showInfo(
-            "My Properties",
-            "Your Listed Properties:\n\n" +
-            "This feature will show all your listed properties.\n" +
-            "You can edit, delete, or mark them as available/unavailable.\n\n" +
-            "Status: Coming soon!"
-        );
+        NavigationUtil.navigateTo("host-properties.fxml", currentUser);
     }
 
     /**
@@ -83,10 +75,9 @@ public class HostDashboardController {
     @FXML
     private void handleSwitchToGuest() {
         boolean confirmed = AlertUtil.showConfirmation(
-            "Switch to Guest Mode",
-            "Would you like to switch to Guest mode to browse properties?\n\n" +
-            "You can switch back to Host mode anytime."
-        );
+                "Switch to Guest Mode",
+                "Would you like to switch to Guest mode to browse properties?\n\n" +
+                        "You can switch back to Host mode anytime.");
 
         if (confirmed) {
             // Navigate to guest dashboard
@@ -95,14 +86,22 @@ public class HostDashboardController {
     }
 
     /**
+     * Handle My Profile button
+     * UC9: Manage Account
+     */
+    @FXML
+    private void handleProfile() {
+        NavigationUtil.navigateTo("profile.fxml", currentUser);
+    }
+
+    /**
      * Handle Logout button
      */
     @FXML
     private void handleLogout() {
         boolean confirmed = AlertUtil.showConfirmation(
-            "Logout",
-            "Are you sure you want to logout?"
-        );
+                "Logout",
+                "Are you sure you want to logout?");
 
         if (confirmed) {
             NavigationUtil.navigateTo("login.fxml");

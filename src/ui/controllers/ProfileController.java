@@ -2,6 +2,7 @@ package ui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import models.User;
 import ui.utils.AlertUtil;
 import ui.utils.NavigationUtil;
@@ -40,6 +41,9 @@ public class ProfileController {
 
     @FXML
     private Label statsValueLabel;
+
+    @FXML
+    private HBox editButtonsBox;
 
     private User currentUser;
 
@@ -114,35 +118,115 @@ public class ProfileController {
      */
     @FXML
     private void handleEditProfile() {
-        // TODO: Implement profile editing functionality
-        // This will be available after business logic integration
+        // Enable editing of name and phone fields
+        nameField.setEditable(true);
+        phoneField.setEditable(true);
+
+        // Change field styles to indicate editable
+        nameField.setStyle(
+                "-fx-padding: 12; -fx-background-color: #ffffff; -fx-font-size: 16px; -fx-border-color: #3498db; -fx-border-width: 2;");
+        phoneField.setStyle(
+                "-fx-padding: 12; -fx-background-color: #ffffff; -fx-font-size: 16px; -fx-border-color: #3498db; -fx-border-width: 2;");
+
+        // Show edit action buttons
+        if (editButtonsBox != null) {
+            editButtonsBox.setVisible(true);
+            editButtonsBox.setManaged(true);
+        }
+
+        // Focus on name field
+        nameField.requestFocus();
+
         AlertUtil.showInfo(
-            "Edit Profile",
-            "Profile editing will be available soon!\n\n" +
-            "This feature will allow you to:\n" +
-            "• Update your name\n" +
-            "• Change your phone number\n" +
-            "• Update your profile picture\n\n" +
-            "Note: Email cannot be changed for security reasons."
-        );
+                "Edit Mode",
+                "You can now edit your profile information.\n\n" +
+                        "Editable fields:\n" +
+                        "• Name\n" +
+                        "• Phone Number\n\n" +
+                        "Click 'Save Changes' when done or 'Cancel' to discard changes.");
     }
 
     /**
-     * Handle Change Password button
+     * Handle Save Changes button
+     */
+    @FXML
+    private void handleSaveChanges() {
+        if (currentUser == null)
+            return;
+
+        String newName = nameField.getText().trim();
+        String newPhone = phoneField.getText().trim();
+
+        // Validate inputs
+        if (newName.isEmpty()) {
+            AlertUtil.showError("Validation Error", "Name cannot be empty!");
+            return;
+        }
+        if (newPhone.isEmpty()) {
+            AlertUtil.showError("Validation Error", "Phone number cannot be empty!");
+            return;
+        }
+
+        // Call business logic to update profile
+        controllers.AccountController accountController = controllers.AccountController.getInstance();
+        String result = accountController.updateProfile(newName, newPhone);
+
+        if ("SUCCESS".equals(result)) {
+            // Update current user object
+            currentUser.setName(newName);
+            currentUser.setPhone(newPhone);
+
+            // Disable editing
+            nameField.setEditable(false);
+            phoneField.setEditable(false);
+
+            // Restore read-only styling
+            nameField.setStyle("-fx-padding: 12; -fx-background-color: #ecf0f1; -fx-font-size: 16px;");
+            phoneField.setStyle("-fx-padding: 12; -fx-background-color: #ecf0f1; -fx-font-size: 16px;");
+
+            // Hide edit action buttons
+            if (editButtonsBox != null) {
+                editButtonsBox.setVisible(false);
+                editButtonsBox.setManaged(false);
+            }
+
+            AlertUtil.showSuccess("Profile Updated", "Your profile has been updated successfully!");
+        } else {
+            AlertUtil.showError("Update Failed", result);
+        }
+    }
+
+    /**
+     * Handle Cancel Edit button
+     */
+    @FXML
+    private void handleCancelEdit() {
+        // Restore original values
+        displayUserProfile();
+
+        // Disable editing
+        nameField.setEditable(false);
+        phoneField.setEditable(false);
+
+        // Restore read-only styling
+        nameField.setStyle("-fx-padding: 12; -fx-background-color: #ecf0f1; -fx-font-size: 16px;");
+        phoneField.setStyle("-fx-padding: 12; -fx-background-color: #ecf0f1; -fx-font-size: 16px;");
+
+        // Hide edit action buttons
+        if (editButtonsBox != null) {
+            editButtonsBox.setVisible(false);
+            editButtonsBox.setManaged(false);
+        }
+
+        AlertUtil.showInfo("Changes Discarded", "Your profile has not been modified.");
+    }
+
+    /**
+     * Handle Change Password button - navigate to password change screen
      */
     @FXML
     private void handleChangePassword() {
-        // TODO: Implement password change functionality
-        // This will be available after business logic integration
-        AlertUtil.showInfo(
-            "Change Password",
-            "Password change will be available soon!\n\n" +
-            "This feature will allow you to:\n" +
-            "• Enter current password\n" +
-            "• Set new password\n" +
-            "• Confirm new password\n\n" +
-            "Your password will be securely encrypted."
-        );
+        NavigationUtil.navigateTo("change-password.fxml", currentUser);
     }
 
     /**

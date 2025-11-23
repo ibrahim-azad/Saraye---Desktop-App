@@ -2,7 +2,6 @@ package ui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import models.User;
 import ui.utils.AlertUtil;
 import ui.utils.NavigationUtil;
 import ui.utils.ValidationUtil;
@@ -49,10 +48,9 @@ public class RegisterController {
 
         // Populate role dropdown
         roleComboBox.getItems().addAll(
-            "Guest (Looking for properties)",
-            "Host (Listing properties)",
-            "Both (Guest & Host)"
-        );
+                "Guest (Looking for properties)",
+                "Host (Listing properties)",
+                "Both (Guest & Host)");
         roleComboBox.setValue("Guest (Looking for properties)");
 
         // Add enter key listener to last field
@@ -83,22 +81,21 @@ public class RegisterController {
         // Convert role selection to database format
         String role = convertRoleSelection(roleSelection);
 
-        // TODO: Call business logic layer (Ibrahim's UserService)
-        // For now, use mock registration
-        boolean success = mockRegistration(name, email, phone, password, role);
+        // Use AuthController for registration
+        controllers.AuthController authController = controllers.AuthController.getInstance();
+        String result = authController.register(name, email, password, phone, role);
 
-        if (success) {
+        if ("SUCCESS".equals(result)) {
             // Show success message
             AlertUtil.showSuccess(
-                "Registration Successful!",
-                "Your account has been created successfully.\n\nYou can now login with your credentials."
-            );
+                    "Registration Successful!",
+                    "Your account has been created successfully.\n\nYou can now login with your credentials.");
 
             // Navigate to login screen
             NavigationUtil.navigateTo("login.fxml");
         } else {
             // Registration failed
-            showError("Registration failed! This email may already be registered.");
+            showError(result);
         }
     }
 
@@ -114,7 +111,7 @@ public class RegisterController {
      * Validate all input fields
      */
     private boolean validateInput(String name, String email, String phone,
-                                   String password, String confirmPassword, String roleSelection) {
+            String password, String confirmPassword, String roleSelection) {
         // Check if fields are empty
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showError("Please fill in all required fields");
@@ -182,34 +179,4 @@ public class RegisterController {
         errorLabel.setVisible(true);
     }
 
-    /**
-     * MOCK REGISTRATION - Temporary until Ibrahim provides UserService
-     * Replace this with real registration later
-     *
-     * @return true if registration successful, false if email already exists
-     */
-    private boolean mockRegistration(String name, String email, String phone,
-                                      String password, String role) {
-        // Mock check: prevent duplicate emails
-        if (email.equals("guest@saraye.com") ||
-            email.equals("host@saraye.com") ||
-            email.equals("both@saraye.com")) {
-            return false; // Email already registered
-        }
-
-        // Simulate successful registration
-        System.out.println("=== MOCK REGISTRATION ===");
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("Phone: " + phone);
-        System.out.println("Role: " + role);
-        System.out.println("========================");
-
-        // In real implementation, this would:
-        // 1. Hash the password
-        // 2. Create user in database
-        // 3. Send verification email (optional)
-
-        return true; // Registration successful
-    }
 }

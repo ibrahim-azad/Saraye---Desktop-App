@@ -175,7 +175,7 @@ public class BookingRequestController {
         if (numGuests > currentProperty.getMaxGuests()) {
             AlertUtil.showError("Capacity Exceeded",
                     "This property can accommodate maximum " + currentProperty.getMaxGuests() + " guests!\n" +
-                    "You requested " + numGuests + " guests.");
+                            "You requested " + numGuests + " guests.");
             return;
         }
 
@@ -183,39 +183,33 @@ public class BookingRequestController {
         long nights = ChronoUnit.DAYS.between(checkIn, checkOut);
         double totalPrice = nights * currentProperty.getPricePerNight();
 
-        // TODO: Call business logic layer (Ibrahim's BookingService)
-        // For now, use mock booking submission
-        boolean success = mockSubmitBooking(checkIn, checkOut, numGuests, totalPrice);
+        // Call business logic layer to create booking
+        controllers.BookingController bookingController = controllers.BookingController.getInstance();
+        String result = bookingController.createBooking(
+                currentProperty.getPropertyID(),
+                checkIn.toString(),
+                checkOut.toString(),
+                totalPrice);
+
+        boolean success = "SUCCESS".equals(result);
 
         if (success) {
             AlertUtil.showSuccess(
-                "Booking Request Submitted!",
-                "Your booking request has been submitted successfully!\n\n" +
-                "Property: " + currentProperty.getTitle() + "\n" +
-                "Check-in: " + checkIn + "\n" +
-                "Check-out: " + checkOut + "\n" +
-                "Guests: " + numGuests + "\n" +
-                "Total Price: PKR " + String.format("%,.0f", totalPrice) + "\n\n" +
-                "The host will review your request and respond soon.\n" +
-                "You can check the status in 'My Bookings'."
-            );
+                    "Booking Request Submitted!",
+                    "Your booking request has been submitted successfully!\n\n" +
+                            "Property: " + currentProperty.getTitle() + "\n" +
+                            "Check-in: " + checkIn + "\n" +
+                            "Check-out: " + checkOut + "\n" +
+                            "Guests: " + numGuests + "\n" +
+                            "Total Price: PKR " + String.format("%,.0f", totalPrice) + "\n\n" +
+                            "The host will review your request and respond soon.\n" +
+                            "You can check the status in 'My Bookings'.");
 
             // Navigate back to guest dashboard
             NavigationUtil.navigateTo("guest-dashboard.fxml", currentUser);
+        } else {
+            AlertUtil.showError("Booking Failed", result);
         }
-    }
-
-    /**
-     * MOCK BOOKING SUBMISSION - Replace with real BookingService later
-     */
-    private boolean mockSubmitBooking(LocalDate checkIn, LocalDate checkOut, int numGuests, double totalPrice) {
-        // In real implementation, this would call:
-        // BookingService.createBooking(currentUser.getUserId(), currentProperty.getPropertyId(),
-        //                              checkIn, checkOut, numGuests, totalPrice);
-
-        // For now, always return success
-        System.out.println("MOCK: Booking created for property " + currentProperty.getPropertyId());
-        return true;
     }
 
     /**

@@ -47,4 +47,15 @@ public class ReviewDAO {
         }
         return list;
     }
+
+    // Create review (alias for addReview for controller compatibility)
+    public boolean createReview(Review review) {
+        return addReview(review);
+    }
+
+    // Get reviews by property ID (alias for getReviewsForProperty for controller
+    // compatibility)
+    public List<Review> getReviewsByPropertyId(String propertyID) {
+        return getReviewsForProperty(propertyID);
+    }
 }

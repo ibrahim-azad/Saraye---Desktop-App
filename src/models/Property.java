@@ -70,6 +70,10 @@ public class Property {
         return amenities;
     }
 
+    public void setAmenities(List<Amenity> amenities) {
+        this.amenities = amenities;
+    }
+
     public String getDescription() {
         return description;
     }

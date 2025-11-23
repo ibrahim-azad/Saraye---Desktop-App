@@ -123,14 +123,10 @@
                 <!-- Amenities -->
                 <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
                     <Label text="Amenities" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-
-                    <VBox spacing="5">
-                        <Label text="List amenities (comma-separated) *" style="-fx-font-weight: bold;"/>
-                        <TextField fx:id="amenitiesField"
-                                  promptText="e.g., WiFi, AC, Parking, Pool, Gym"
-                                  style="-fx-padding: 10;"/>
-                    </VBox>
-
+                    <Label text="Select available amenities:" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                    
+                    <!-- Amenities will be loaded dynamically as checkboxes -->
+                    <VBox fx:id="amenitiesContainer" spacing="8" style="-fx-padding: 10;"/>
                 </VBox>
 
                 <!-- Submit Buttons -->

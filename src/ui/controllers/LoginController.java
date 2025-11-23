@@ -59,12 +59,12 @@ public class LoginController {
             return;
         }
 
-        // TODO: Call business logic layer (Ibrahim's UserService)
-        // For now, use mock authentication
-        User user = mockAuthentication(email, password);
+        // Use AuthController for authentication and session management
+        controllers.AuthController authController = controllers.AuthController.getInstance();
+        User user = authController.login(email, password);
 
         if (user != null) {
-            // Login successful
+            // Login successful - session is now set by AuthController
             navigateToDashboard(user);
         } else {
             // Login failed
@@ -138,30 +138,4 @@ public class LoginController {
         errorLabel.setVisible(true);
     }
 
-    /**
-     * MOCK AUTHENTICATION - Temporary until Ibrahim provides UserService
-     * Replace this with real authentication later
-     */
-    private User mockAuthentication(String email, String password) {
-        // Mock users for testing
-        // Guest: guest@saraye.com / password123
-        // Host: host@saraye.com / password123
-
-        if (email.equals("guest@saraye.com") && password.equals("password123")) {
-            return new Guest("1", "John Doe", email, password, "+92-300-1234567");
-        }
-
-        if (email.equals("host@saraye.com") && password.equals("password123")) {
-            return new Host("2", "Jane Smith", email, password, "+92-300-7654321");
-        }
-
-        if (email.equals("both@saraye.com") && password.equals("password123")) {
-            // For "both" role, we'll return a Guest but could also implement a separate class
-            Guest user = new Guest("3", "Ali Ahmed", email, password, "+92-300-1111111");
-            return user;
-        }
-
-        // Authentication failed
-        return null;
-    }
 }

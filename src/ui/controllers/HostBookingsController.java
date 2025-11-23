@@ -6,6 +6,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import models.Booking;
 import models.User;
+import databases.BookingDAO;
 import ui.utils.AlertUtil;
 import ui.utils.NavigationUtil;
 
@@ -83,8 +84,10 @@ public class HostBookingsController {
             private final HBox container = new HBox(5, approveBtn, declineBtn);
 
             {
-                approveBtn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 3;");
-                declineBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 3;");
+                approveBtn.setStyle(
+                        "-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 3;");
+                declineBtn.setStyle(
+                        "-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 3;");
 
                 approveBtn.setOnAction(event -> {
                     Booking booking = getTableView().getItems().get(getIndex());
@@ -120,8 +123,7 @@ public class HostBookingsController {
             }
         });
 
-        // Load mock bookings
-        loadMockBookings();
+        // Don't load bookings here - wait for setUser to be called
     }
 
     /**
@@ -130,6 +132,8 @@ public class HostBookingsController {
     public void setUser(Object userData) {
         if (userData instanceof User) {
             this.currentUser = (User) userData;
+            // Load bookings AFTER user is set
+            loadBookingsFromDatabase();
         }
     }
 
@@ -182,7 +186,8 @@ public class HostBookingsController {
             filtered = allBookings.stream()
                     .filter(b -> currentFilter.equalsIgnoreCase(b.getStatus()))
                     .collect(Collectors.toList());
-            statusLabel.setText("Showing: " + currentFilter.substring(0, 1).toUpperCase() + currentFilter.substring(1) + " Bookings");
+            statusLabel.setText("Showing: " + currentFilter.substring(0, 1).toUpperCase() + currentFilter.substring(1)
+                    + " Bookings");
         }
 
         bookingsTable.getItems().clear();
@@ -195,24 +200,29 @@ public class HostBookingsController {
      */
     private void handleApproveBooking(Booking booking) {
         boolean confirmed = AlertUtil.showConfirmation(
-            "Approve Booking",
-            "Are you sure you want to approve this booking?\n\n" +
-            "Guest: " + booking.getGuestName() + "\n" +
-            "Property: " + booking.getPropertyTitle() + "\n" +
-            "Check-in: " + booking.getCheckInDate() + "\n" +
-            "Check-out: " + booking.getCheckOutDate() + "\n" +
-            "Total: PKR " + String.format("%,.0f", booking.getTotalPrice())
-        );
+                "Approve Booking",
+                "Are you sure you want to approve this booking?\n\n" +
+                        "Guest: " + booking.getGuestName() + "\n" +
+                        "Property: " + booking.getPropertyTitle() + "\n" +
+                        "Check-in: " + booking.getCheckInDate() + "\n" +
+                        "Check-out: " + booking.getCheckOutDate() + "\n" +
+                        "Total: PKR " + String.format("%,.0f", booking.getTotalPrice()));
 
         if (confirmed) {
-            // TODO: Call business logic layer (Ibrahim's BookingService)
-            // For now, use mock approval
-            mockApproveBooking(booking);
+            // Update booking status in database
+            BookingDAO bookingDAO = new BookingDAO();
+            boolean success = bookingDAO.updateStatus(booking.getBookingID(), "APPROVED");
 
-            AlertUtil.showSuccess("Booking Approved", "The booking has been approved successfully!");
+            if (success) {
+                booking.setStatus("approved");
+                AlertUtil.showSuccess("Booking Approved", "The booking has been approved successfully!");
+                System.out.println("Booking " + booking.getBookingID() + " approved in database");
+            } else {
+                AlertUtil.showError("Error", "Failed to approve booking in database");
+            }
 
             // Refresh the table
-            loadMockBookings();
+            loadBookingsFromDatabase();
             filterBookings();
         }
     }
@@ -222,100 +232,43 @@ public class HostBookingsController {
      */
     private void handleDeclineBooking(Booking booking) {
         boolean confirmed = AlertUtil.showConfirmation(
-            "Decline Booking",
-            "Are you sure you want to decline this booking?\n\n" +
-            "Guest: " + booking.getGuestName() + "\n" +
-            "Property: " + booking.getPropertyTitle() + "\n" +
-            "Check-in: " + booking.getCheckInDate() + "\n" +
-            "Check-out: " + booking.getCheckOutDate()
-        );
+                "Decline Booking",
+                "Are you sure you want to decline this booking?\n\n" +
+                        "Guest: " + booking.getGuestName() + "\n" +
+                        "Property: " + booking.getPropertyTitle() + "\n" +
+                        "Check-in: " + booking.getCheckInDate() + "\n" +
+                        "Check-out: " + booking.getCheckOutDate());
 
         if (confirmed) {
-            // TODO: Call business logic layer (Ibrahim's BookingService)
-            // For now, use mock decline
-            mockDeclineBooking(booking);
+            // Update booking status in database
+            BookingDAO bookingDAO = new BookingDAO();
+            boolean success = bookingDAO.updateStatus(booking.getBookingID(), "DECLINED");
 
-            AlertUtil.showInfo("Booking Declined", "The booking has been declined.");
+            if (success) {
+                booking.setStatus("declined");
+                AlertUtil.showInfo("Booking Declined", "The booking has been declined.");
+                System.out.println("Booking " + booking.getBookingID() + " declined in database");
+            } else {
+                AlertUtil.showError("Error", "Failed to decline booking in database");
+            }
 
             // Refresh the table
-            loadMockBookings();
+            loadBookingsFromDatabase();
             filterBookings();
         }
     }
 
     /**
-     * MOCK APPROVE - Replace with real BookingService later
+     * Load bookings from database
      */
-    private void mockApproveBooking(Booking booking) {
-        // In real implementation: BookingService.approveBooking(booking.getBookingId());
-        booking.setStatus("approved");
-        System.out.println("MOCK: Booking " + booking.getBookingID() + " approved");
-    }
-
-    /**
-     * MOCK DECLINE - Replace with real BookingService later
-     */
-    private void mockDeclineBooking(Booking booking) {
-        // In real implementation: BookingService.declineBooking(booking.getBookingId());
-        booking.setStatus("declined");
-        System.out.println("MOCK: Booking " + booking.getBookingID() + " declined");
-    }
-
-    /**
-     * Load mock bookings for testing
-     */
-    private void loadMockBookings() {
-        allBookings = getMockBookings();
+    private void loadBookingsFromDatabase() {
+        if (currentUser != null) {
+            BookingDAO bookingDAO = new BookingDAO();
+            allBookings = bookingDAO.getBookingsByHost(currentUser.getUserId());
+        } else {
+            allBookings = new ArrayList<>();
+        }
         filterBookings();
-    }
-
-    /**
-     * Get mock bookings for testing
-     */
-    private List<Booking> getMockBookings() {
-        List<Booking> bookings = new ArrayList<>();
-
-        Booking b1 = new Booking("1", "101", "1",
-                LocalDate.of(2025, 12, 1), LocalDate.of(2025, 12, 5),
-                60000, "pending");
-        b1.setNumGuests(4);
-        b1.setGuestName("Ali Khan");
-        b1.setPropertyTitle("Luxury Apartment in DHA");
-        bookings.add(b1);
-
-        Booking b2 = new Booking("2", "102", "2",
-                LocalDate.of(2025, 12, 10), LocalDate.of(2025, 12, 12),
-                16000, "pending");
-        b2.setNumGuests(2);
-        b2.setGuestName("Sara Ahmed");
-        b2.setPropertyTitle("Cozy Studio in Gulberg");
-        bookings.add(b2);
-
-        Booking b3 = new Booking("3", "103", "1",
-                LocalDate.of(2025, 11, 25), LocalDate.of(2025, 11, 28),
-                45000, "approved");
-        b3.setNumGuests(6);
-        b3.setGuestName("Usman Tariq");
-        b3.setPropertyTitle("Luxury Apartment in DHA");
-        bookings.add(b3);
-
-        Booking b4 = new Booking("4", "104", "2",
-                LocalDate.of(2025, 11, 20), LocalDate.of(2025, 11, 22),
-                16000, "declined");
-        b4.setNumGuests(2);
-        b4.setGuestName("Ayesha Malik");
-        b4.setPropertyTitle("Cozy Studio in Gulberg");
-        bookings.add(b4);
-
-        Booking b5 = new Booking("5", "105", "5",
-                LocalDate.of(2025, 12, 15), LocalDate.of(2025, 12, 20),
-                50000, "pending");
-        b5.setNumGuests(4);
-        b5.setGuestName("Hassan Raza");
-        b5.setPropertyTitle("Modern Flat in Johar");
-        bookings.add(b5);
-
-        return bookings;
     }
 
     /**

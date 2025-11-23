@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.controllers.PaymentUIController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
+            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="← Back"
+                    onAction="#handleBack"
+                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+        </HBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="25" style="-fx-padding: 40; -fx-max-width: 700; -fx-alignment: center;">
+
+                <!-- Page Title -->
+                <VBox spacing="10" alignment="CENTER">
+                    <Label text="💳" style="-fx-font-size: 64px;"/>
+                    <Label text="Complete Payment" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <Label text="Secure your booking with payment" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Booking Summary Card -->
+                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-border-color: #3498db; -fx-border-width: 2; -fx-border-radius: 10;">
+                    <Label text="Booking Summary" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    
+                    <HBox spacing="10">
+                        <Label text="Booking ID:" style="-fx-font-weight: bold; -fx-min-width: 120;"/>
+                        <Label fx:id="bookingIdLabel" text="B001" style="-fx-text-fill: #34495e;"/>
+                    </HBox>
+                    
+                    <HBox spacing="10">
+                        <Label text="Property:" style="-fx-font-weight: bold; -fx-min-width: 120;"/>
+                        <Label fx:id="propertyNameLabel" text="Property Name" style="-fx-text-fill: #34495e;"/>
+                    </HBox>
+                    
+                    <HBox spacing="10">
+                        <Label text="Check-in:" style="-fx-font-weight: bold; -fx-min-width: 120;"/>
+                        <Label fx:id="checkInLabel" text="2025-01-01" style="-fx-text-fill: #34495e;"/>
+                    </HBox>
+                    
+                    <HBox spacing="10">
+                        <Label text="Check-out:" style="-fx-font-weight: bold; -fx-min-width: 120;"/>
+                        <Label fx:id="checkOutLabel" text="2025-01-05" style="-fx-text-fill: #34495e;"/>
+                    </HBox>
+                    
+                    <Separator/>
+                    
+                    <HBox spacing="10">
+                        <Label text="Total Amount:" style="-fx-font-weight: bold; -fx-min-width: 120; -fx-font-size: 16px;"/>
+                        <Label fx:id="totalAmountLabel" text="PKR 0" style="-fx-text-fill: #27ae60; -fx-font-weight: bold; -fx-font-size: 18px;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Payment Method Selection -->
+                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10;">
+                    <Label text="Payment Method *" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <Label text="Select your preferred payment method" style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;"/>
+                    
+                    <VBox spacing="10">
+                        <RadioButton fx:id="creditCardRadio" text="💳 Credit/Debit Card" 
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold;"
+                                   selected="true"/>
+                        <RadioButton fx:id="jazzCashRadio" text="📱 JazzCash Mobile Wallet" 
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                        <RadioButton fx:id="easypaisaRadio" text="📱 Easypaisa Mobile Wallet" 
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Credit Card Details -->
+                <VBox fx:id="creditCardPanel" spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10;">
+                    <Label text="Card Details" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    
+                    <VBox spacing="5">
+                        <Label text="Card Number *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <TextField fx:id="cardNumberField" 
+                                  promptText="1234 5678 9012 3456"
+                                  style="-fx-padding: 12; -fx-font-size: 14px;"/>
+                    </VBox>
+                    
+                    <HBox spacing="15">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Expiry Date *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                            <TextField fx:id="expiryField" 
+                                      promptText="MM/YY"
+                                      style="-fx-padding: 12; -fx-font-size: 14px;"/>
+                        </VBox>
+                        
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="CVV *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                            <TextField fx:id="cvvField" 
+                                      promptText="123"
+                                      style="-fx-padding: 12; -fx-font-size: 14px;"/>
+                        </VBox>
+                    </HBox>
+                    
+                    <VBox spacing="5">
+                        <Label text="Cardholder Name *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <TextField fx:id="cardHolderField" 
+                                  promptText="Name as on card"
+                                  style="-fx-padding: 12; -fx-font-size: 14px;"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Mobile Wallet Details -->
+                <VBox fx:id="mobileWalletPanel" spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10;" visible="false" managed="false">
+                    <Label text="Mobile Wallet Details" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    
+                    <VBox spacing="5">
+                        <Label text="Mobile Number *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <TextField fx:id="mobileNumberField" 
+                                  promptText="03XX-XXXXXXX"
+                                  style="-fx-padding: 12; -fx-font-size: 14px;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5">
+                        <Label text="Account Name *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <TextField fx:id="accountNameField" 
+                                  promptText="Account holder name"
+                                  style="-fx-padding: 12; -fx-font-size: 14px;"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Security Notice -->
+                <HBox spacing="10" style="-fx-background-color: #e8f5e9; -fx-padding: 15; -fx-background-radius: 5;">
+                    <Label text="🔒" style="-fx-font-size: 20px;"/>
+                    <Label text="Your payment information is secure and encrypted. We do not store your card details." 
+                           wrapText="true"
+                           style="-fx-font-size: 12px; -fx-text-fill: #2e7d32;"/>
+                </HBox>
+
+                <!-- Submit Button -->
+                <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10;">
+                    <Button text="Cancel"
+                            onAction="#handleBack"
+                            style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 12 30; -fx-font-size: 16px; -fx-background-radius: 5;"/>
+                    <Button text="💳 Pay Now"
+                            onAction="#handlePayment"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 12 40; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

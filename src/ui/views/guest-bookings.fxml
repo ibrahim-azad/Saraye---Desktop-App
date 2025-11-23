@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="ui.controllers.GuestBookingsController" styleClass="root"
+    stylesheets="@../resources/css/style.css">
+
+    <!-- Top Section - Header -->
+    <top>
+        <VBox spacing="10" styleClass="header-section">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30" />
+            </padding>
+
+            <!-- Title and Back Button -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Button text="← Back" onAction="#handleBack" styleClass="back-button" />
+                <Label text="My Bookings" styleClass="page-title">
+                    <font>
+                        <Font name="System Bold" size="28" />
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="🔄 Refresh" onAction="#handleRefresh" styleClass="primary-button" />
+            </HBox>
+
+            <!-- Subtitle -->
+            <Label text="View and manage your property bookings" styleClass="subtitle">
+                <font>
+                    <Font size="14" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+
+    <!-- Center Section - Bookings Table -->
+    <center>
+        <VBox spacing="15" styleClass="content-section">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30" />
+            </padding>
+
+            <!-- Booking Count Label -->
+            <HBox alignment="CENTER_LEFT">
+                <Label fx:id="bookingCountLabel" text="Loading bookings..." styleClass="info-label">
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Label>
+            </HBox>
+
+            <!-- Bookings Table -->
+            <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="bookingIdColumn" text="Booking ID" prefWidth="120" />
+                    <TableColumn fx:id="propertyIdColumn" text="Property ID" prefWidth="120" />
+                    <TableColumn fx:id="checkInColumn" text="Check-In" prefWidth="120" />
+                    <TableColumn fx:id="checkOutColumn" text="Check-Out" prefWidth="120" />
+                    <TableColumn fx:id="totalPriceColumn" text="Total Price (PKR)" prefWidth="130" />
+                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
+                    <TableColumn fx:id="actionColumn" text="Action" prefWidth="100" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+
+            <!-- Info Box -->
+            <VBox spacing="10" styleClass="info-box">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15" />
+                </padding>
+
+                <Label text="ℹ️ Booking Status Information" styleClass="info-title">
+                    <font>
+                        <Font name="System Bold" size="14" />
+                    </font>
+                </Label>
+
+                <Label
+                    text="• PENDING - Waiting for host approval\n• APPROVED - Confirmed by host\n• CANCELLED - Cancelled by you\n• DECLINED - Declined by host"
+                    styleClass="info-text" wrapText="true">
+                    <font>
+                        <Font size="12" />
+                    </font>
+                </Label>
+
+                <Label text="💡 You can only cancel PENDING or APPROVED bookings." styleClass="info-text"
+                    wrapText="true">
+                    <font>
+                        <Font size="12" />
+                    </font>
+                </Label>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

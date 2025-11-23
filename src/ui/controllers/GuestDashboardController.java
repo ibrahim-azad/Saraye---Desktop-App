@@ -56,12 +56,8 @@ public class GuestDashboardController {
      */
     @FXML
     private void handleMyBookings() {
-        // TODO: Create My Bookings screen
-        AlertUtil.showInfo(
-            "My Bookings",
-            "This feature will show all your booking requests and reservations.\n\n" +
-            "Status: Coming soon!"
-        );
+        // Navigate to guest bookings screen
+        NavigationUtil.navigateTo("guest-bookings.fxml", currentUser);
     }
 
     /**
@@ -81,10 +77,9 @@ public class GuestDashboardController {
     @FXML
     private void handleBecomeHost() {
         boolean confirmed = AlertUtil.showConfirmation(
-            "Become a Host",
-            "Would you like to switch to Host mode to list your properties?\n\n" +
-            "You can switch back to Guest mode anytime."
-        );
+                "Become a Host",
+                "Would you like to switch to Host mode to list your properties?\n\n" +
+                        "You can switch back to Guest mode anytime.");
 
         if (confirmed) {
             // Update user role to 'both' (guest + host)
@@ -103,9 +98,8 @@ public class GuestDashboardController {
     @FXML
     private void handleLogout() {
         boolean confirmed = AlertUtil.showConfirmation(
-            "Logout",
-            "Are you sure you want to logout?"
-        );
+                "Logout",
+                "Are you sure you want to logout?");
 
         if (confirmed) {
             NavigationUtil.navigateTo("login.fxml");

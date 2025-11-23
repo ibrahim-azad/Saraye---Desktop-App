@@ -42,4 +42,35 @@ public class ReportDAO {
         }
         return list;
     }
+
+    // Get pending reports (alias for getOpenReports for controller compatibility)
+    public List<Report> getPendingReports() {
+        List<Report> list = new ArrayList<>();
+        String sql = "SELECT * FROM Reports WHERE status IN ('OPEN', 'PENDING')";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Report report = new Report(
+                        rs.getString("reportID"),
+                        rs.getString("description"),
+                        rs.getString("status"));
+                list.add(report);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Update report status
+    public boolean updateReportStatus(String reportID, String status) {
+        String sql = "UPDATE Reports SET status = ? WHERE reportID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            stmt.setString(2, reportID);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

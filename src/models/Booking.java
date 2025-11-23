@@ -1,7 +1,6 @@
 package models;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class Booking {
     private String bookingID;
@@ -17,9 +16,10 @@ public class Booking {
     private String guestName;
     private String propertyTitle;
 
-    // Constructor
-    public Booking(String guestID, String propertyID, LocalDate checkIn, LocalDate checkOut, double price) {
-        this.bookingID = UUID.randomUUID().toString(); // Generate ID automatically
+    // Constructor for creating new booking (ID will be set by DAO)
+    public Booking(String bookingID, String guestID, String propertyID, LocalDate checkIn, LocalDate checkOut,
+            double price) {
+        this.bookingID = bookingID;
         this.guestID = guestID;
         this.propertyID = propertyID;
         this.checkInDate = checkIn;

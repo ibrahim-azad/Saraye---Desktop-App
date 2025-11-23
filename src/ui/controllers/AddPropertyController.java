@@ -2,13 +2,17 @@ package ui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import models.Property;
 import models.User;
 import models.Address;
+import models.Amenity;
+import databases.PropertyDAO;
 import ui.utils.AlertUtil;
 import ui.utils.NavigationUtil;
 import ui.utils.ValidationUtil;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AddPropertyController - Handles adding new property listings
@@ -46,9 +50,47 @@ public class AddPropertyController {
     private TextField bathroomsField;
 
     @FXML
-    private TextField amenitiesField;
+    private VBox amenitiesContainer;
 
     private User currentUser;
+    private List<CheckBox> amenityCheckBoxes = new ArrayList<>();
+    private PropertyDAO propertyDAO = new PropertyDAO();
+
+    /**
+     * Initialize method - loads amenities from database
+     */
+    @FXML
+    private void initialize() {
+        loadAmenities();
+    }
+
+    /**
+     * Load amenities from database and create checkboxes
+     */
+    private void loadAmenities() {
+        List<Amenity> amenities = propertyDAO.getAllAmenities();
+
+        for (Amenity amenity : amenities) {
+            CheckBox checkBox = new CheckBox(amenity.getName());
+            checkBox.setUserData(amenity); // Store amenity object
+            checkBox.setStyle("-fx-font-size: 14px;");
+            amenityCheckBoxes.add(checkBox);
+            amenitiesContainer.getChildren().add(checkBox);
+        }
+    }
+
+    /**
+     * Get selected amenities from checkboxes
+     */
+    private List<Amenity> getSelectedAmenities() {
+        List<Amenity> selected = new ArrayList<>();
+        for (CheckBox checkBox : amenityCheckBoxes) {
+            if (checkBox.isSelected()) {
+                selected.add((Amenity) checkBox.getUserData());
+            }
+        }
+        return selected;
+    }
 
     /**
      * Set user data (called by NavigationUtil)
@@ -73,7 +115,6 @@ public class AddPropertyController {
         String maxGuestsStr = maxGuestsField.getText().trim();
         String bedroomsStr = bedroomsField.getText().trim();
         String bathroomsStr = bathroomsField.getText().trim();
-        String amenities = amenitiesField.getText().trim();
 
         // Validate required fields
         if (title.isEmpty()) {
@@ -124,9 +165,10 @@ public class AddPropertyController {
             return;
         }
 
-        if (amenities.isEmpty()) {
-            AlertUtil.showError("Validation Error", "Please enter at least one amenity!");
-            amenitiesField.requestFocus();
+        // Check if at least one amenity is selected
+        List<Amenity> selectedAmenities = getSelectedAmenities();
+        if (selectedAmenities.isEmpty()) {
+            AlertUtil.showError("Validation Error", "Please select at least one amenity!");
             return;
         }
 
@@ -185,54 +227,26 @@ public class AddPropertyController {
             return;
         }
 
-        // TODO: Call business logic layer (Ibrahim's PropertyService)
-        // For now, use mock property creation
-        boolean success = mockAddProperty(title, description, address, city, price,
-                                         maxGuests, bedrooms, bathrooms, amenities);
-
-        if (success) {
-            AlertUtil.showSuccess(
-                "Property Added Successfully!",
-                "Your property has been listed successfully!\n\n" +
-                "Title: " + title + "\n" +
-                "City: " + city + "\n" +
-                "Price: PKR " + String.format("%,.0f", price) + " per night\n\n" +
-                "Your property is now visible to guests searching in " + city + "."
-            );
-
-            // Navigate back to host dashboard
-            NavigationUtil.navigateTo("host-dashboard.fxml", currentUser);
-        }
-    }
-
-    /**
-     * MOCK ADD PROPERTY - Replace with real PropertyService later
-     */
-    private boolean mockAddProperty(String title, String description, String address,
-                                    String city, double price, int maxGuests,
-                                    int bedrooms, int bathrooms, String amenities) {
-        // In real implementation, this would call:
-        // PropertyService.createProperty(currentUser.getUserId(), title, description,
-        //                                address, city, price, maxGuests, bedrooms,
-        //                                bathrooms, amenities);
+        // Generate proper IDs
+        String addressID = propertyDAO.generateAddressID();
+        String propertyID = propertyDAO.generatePropertyID();
 
         // Create Address object
         Address propertyAddress = new Address(
-            UUID.randomUUID().toString(),
-            address,
-            city,
-            "Pakistan",  // Default country
-            ""  // Zip code (can be added to form later)
+                addressID,
+                address,
+                city,
+                "Pakistan", // Default country
+                "" // Zip code (can be added to form later)
         );
 
-        // Create a mock property object for demonstration
+        // Create Property object
         Property newProperty = new Property(
-            UUID.randomUUID().toString(),  // Property ID
-            currentUser != null ? currentUser.getUserId() : "0",  // Host ID
-            title,
-            price,
-            propertyAddress
-        );
+                propertyID,
+                currentUser != null ? currentUser.getUserId() : "0", // Host ID
+                title,
+                price,
+                propertyAddress);
 
         // Set additional fields
         newProperty.setDescription(description);
@@ -240,27 +254,33 @@ public class AddPropertyController {
         newProperty.setBedrooms(bedrooms);
         newProperty.setBathrooms(bathrooms);
         newProperty.setStatus("available");
+        newProperty.setAmenities(selectedAmenities);
 
-        System.out.println("MOCK: Property created with ID " + newProperty.getPropertyId());
-        System.out.println("      Title: " + newProperty.getTitle());
-        System.out.println("      City: " + newProperty.getCity());
-        System.out.println("      Price: PKR " + newProperty.getPricePerNight());
+        // Save property to database
+        boolean success = propertyDAO.saveProperty(newProperty);
 
-        return true;
+        if (success) {
+            AlertUtil.showSuccess(
+                    "Property Added Successfully!",
+                    "Your property has been listed successfully!\n\n" +
+                            "Property ID: " + propertyID + "\n" +
+                            "Title: " + title + "\n" +
+                            "City: " + city + "\n" +
+                            "Price: PKR " + price + "/night\n\n" +
+                            "Your property is now visible to guests searching in " + city + ".");
+
+            handleBack(); // Return to dashboard
+        } else {
+            AlertUtil.showError("Error", "Failed to add property. Please try again.");
+        }
     }
 
     /**
-     * Handle Back button
+     * Handle Back/Cancel button
      */
     @FXML
     private void handleBack() {
-        boolean confirmed = AlertUtil.showConfirmation(
-            "Cancel Adding Property",
-            "Are you sure you want to cancel?\n\nAll entered data will be lost."
-        );
-
-        if (confirmed) {
-            NavigationUtil.navigateTo("host-dashboard.fxml", currentUser);
-        }
+        // Navigate back to host dashboard
+        NavigationUtil.navigateTo("host-dashboard.fxml", currentUser);
     }
 }

@@ -7,7 +7,7 @@ public class Admin extends User implements Notifiable {
 
     @Override
     public String getRole() {
-        return "admin";
+        return "ADMIN";
     }
 
     @Override

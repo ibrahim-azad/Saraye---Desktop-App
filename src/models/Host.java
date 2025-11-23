@@ -7,6 +7,6 @@ public class Host extends User {
 
     @Override
     public String getRole() {
-        return "host";
+        return "HOST";
     }
 }

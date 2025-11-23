@@ -16,3 +16,8 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.bak
+
+# Documentation and SQL files
+*.pdf
+*.md
+*.sql
