@@ -22,7 +22,9 @@ public class Main extends Application {
             // Set primary stage for navigation
             NavigationUtil.setPrimaryStage(primaryStage);
 
-            // Set minimum window size
+            // Set fixed window size to prevent resizing between screens
+            primaryStage.setWidth(1200);
+            primaryStage.setHeight(750);
             primaryStage.setMinWidth(900);
             primaryStage.setMinHeight(600);
 

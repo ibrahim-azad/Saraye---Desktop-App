@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.controllers.ReportIssueController"
+      alignment="TOP_CENTER"
+      spacing="20"
+      style="-fx-padding: 30; -fx-background-color: #f5f5f5;">
+
+    <!-- Header -->
+    <VBox alignment="CENTER" spacing="10">
+        <Label text="Report Issue" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #d32f2f;">
+            <font>
+                <Font name="System Bold" size="28.0"/>
+            </font>
+        </Label>
+        <Label text="Help us maintain a safe and trustworthy community"
+               style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+    </VBox>
+
+    <!-- Form Container -->
+    <VBox spacing="15" maxWidth="500" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+
+        <!-- Property Info (Read-only) -->
+        <VBox spacing="5">
+            <Label text="Property:" style="-fx-font-weight: bold;"/>
+            <Label fx:id="propertyTitleLabel" text="Property name will appear here"
+                   style="-fx-text-fill: #666;"/>
+        </VBox>
+
+        <!-- Issue Category -->
+        <VBox spacing="5">
+            <Label text="Issue Category:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="categoryComboBox" maxWidth="Infinity" promptText="Select category"/>
+        </VBox>
+
+        <!-- Description -->
+        <VBox spacing="5">
+            <Label text="Description:" style="-fx-font-weight: bold;"/>
+            <TextArea fx:id="descriptionTextArea"
+                      promptText="Please describe the issue in detail (minimum 20 characters)"
+                      wrapText="true"
+                      prefRowCount="6"
+                      maxWidth="Infinity"/>
+            <Label fx:id="charCountLabel" text="0 / 500 characters"
+                   style="-fx-font-size: 11px; -fx-text-fill: #999;"/>
+        </VBox>
+
+        <!-- Error/Success Message -->
+        <Label fx:id="messageLabel" visible="false" wrapText="true"
+               style="-fx-font-weight: bold;"/>
+
+        <!-- Buttons -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Submit Report" onAction="#handleSubmitReport"
+                    style="-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 30; -fx-background-radius: 5; -fx-cursor: hand;"/>
+            <Button text="Cancel" onAction="#handleCancel"
+                    style="-fx-background-color: #999; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 30; -fx-background-radius: 5; -fx-cursor: hand;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Info Footer -->
+    <VBox alignment="CENTER" spacing="5" maxWidth="500">
+        <Label text="All reports are reviewed by our moderation team within 24-48 hours."
+               style="-fx-font-size: 12px; -fx-text-fill: #666; -fx-text-alignment: center;" wrapText="true"/>
+        <Label text="False reports may result in account suspension."
+               style="-fx-font-size: 11px; -fx-text-fill: #999; -fx-font-style: italic;" wrapText="true"/>
+    </VBox>
+
+</VBox>

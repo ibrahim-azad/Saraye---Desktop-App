@@ -4,18 +4,25 @@ import java.util.UUID;
 
 public class Report {
     private String reportID;
+    private String propertyId;
+    private String reporterId;
     private String description;
     private String status; // OPEN, RESOLVED
 
-    public Report(String description) {
+    // Constructor for creating new report
+    public Report(String propertyId, String reporterId, String description) {
         this.reportID = UUID.randomUUID().toString();
+        this.propertyId = propertyId;
+        this.reporterId = reporterId;
         this.description = description;
         this.status = "OPEN";
     }
 
     // Constructor for loading from database
-    public Report(String reportID, String description, String status) {
+    public Report(String reportID, String propertyId, String reporterId, String description, String status) {
         this.reportID = reportID;
+        this.propertyId = propertyId;
+        this.reporterId = reporterId;
         this.description = description;
         this.status = status;
     }
@@ -23,6 +30,14 @@ public class Report {
     // Getters
     public String getReportID() {
         return reportID;
+    }
+
+    public String getPropertyId() {
+        return propertyId;
+    }
+
+    public String getReporterId() {
+        return reporterId;
     }
 
     public String getDescription() {

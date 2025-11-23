@@ -63,4 +63,24 @@ public class ReviewDAO {
     public List<Review> getReviewsByPropertyId(String propertyID) {
         return getReviewsForProperty(propertyID);
     }
+
+    public List<Review> getAllReviews() {
+        List<Review> reviews = new ArrayList<>();
+        String sql = "SELECT * FROM Reviews";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Review review = new Review(
+                    rs.getString("reviewID"),
+                    rs.getString("bookingID"),
+                    rs.getInt("rating"),
+                    rs.getString("comment"),
+                    rs.getTimestamp("reviewDate").toLocalDateTime()
+                );
+                reviews.add(review);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reviews;
+    }
 }

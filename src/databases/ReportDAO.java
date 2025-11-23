@@ -6,19 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportDAO {
-    private Connection conn;
+    protected Connection conn;
 
     public ReportDAO() {
         this.conn = DatabaseConnection.getInstance().getConnection();
     }
 
+    // Constructor for mock subclasses to skip database connection
+    public ReportDAO(boolean skipConnection) {
+        if (!skipConnection) {
+            this.conn = DatabaseConnection.getInstance().getConnection();
+        }
+    }
+
     public boolean createReport(Report report) {
-        // Assuming you add a 'description' column to Report table in schema if missing
-        String sql = "INSERT INTO Reports (reportID, description, status) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Reports (reportID, propertyId, reporterId, description, status) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, report.getReportID());
-            stmt.setString(2, report.getDescription());
-            stmt.setString(3, "OPEN");
+            stmt.setString(2, report.getPropertyId());
+            stmt.setString(3, report.getReporterId());
+            stmt.setString(4, report.getDescription());
+            stmt.setString(5, "OPEN");
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,6 +41,8 @@ public class ReportDAO {
             while (rs.next()) {
                 Report report = new Report(
                         rs.getString("reportID"),
+                        rs.getString("propertyId"),
+                        rs.getString("reporterId"),
                         rs.getString("description"),
                         rs.getString("status"));
                 list.add(report);
@@ -51,6 +61,8 @@ public class ReportDAO {
             while (rs.next()) {
                 Report report = new Report(
                         rs.getString("reportID"),
+                        rs.getString("propertyId"),
+                        rs.getString("reporterId"),
                         rs.getString("description"),
                         rs.getString("status"));
                 list.add(report);

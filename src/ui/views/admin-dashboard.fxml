@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.controllers.AdminDashboardController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox style="-fx-background-color: #c0392b; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
+            <Label text="SARAYE ADMIN" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;">
+                <font>
+                    <Font name="System Bold" size="24.0"/>
+                </font>
+            </Label>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="welcomeLabel" text="Welcome, Admin!" style="-fx-text-fill: white; -fx-font-size: 16px;"/>
+
+            <Button text="My Profile"
+                    onAction="#handleProfile"
+                    style="-fx-background-color: #a93226; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+
+            <Button text="Logout"
+                    onAction="#handleLogout"
+                    style="-fx-background-color: #7b241c; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+        </HBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 30;">
+
+            <!-- Title Section -->
+            <VBox spacing="10" alignment="CENTER">
+                <Label text="Admin Dashboard" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <font>
+                        <Font name="System Bold" size="32.0"/>
+                    </font>
+                </Label>
+                <Label text="Monitor platform activity and manage reports" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;"/>
+            </VBox>
+
+            <!-- Statistics Cards -->
+            <GridPane hgap="20" vgap="20" alignment="CENTER">
+                <!-- Total Users -->
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="0"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);"
+                      minWidth="220" minHeight="150">
+                    <Label text="👥" style="-fx-font-size: 48px;"/>
+                    <Label fx:id="totalUsersLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #3498db;">
+                        <font>
+                            <Font name="System Bold" size="36.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Total Users" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Total Properties -->
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);"
+                      minWidth="220" minHeight="150">
+                    <Label text="🏠" style="-fx-font-size: 48px;"/>
+                    <Label fx:id="totalPropertiesLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #27ae60;">
+                        <font>
+                            <Font name="System Bold" size="36.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Total Properties" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Total Bookings -->
+                <VBox GridPane.columnIndex="2" GridPane.rowIndex="0"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);"
+                      minWidth="220" minHeight="150">
+                    <Label text="📅" style="-fx-font-size: 48px;"/>
+                    <Label fx:id="totalBookingsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #9b59b6;">
+                        <font>
+                            <Font name="System Bold" size="36.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Total Bookings" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Pending Reports -->
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="1"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2); -fx-border-color: #e74c3c; -fx-border-width: 3; -fx-border-radius: 10;"
+                      minWidth="220" minHeight="150">
+                    <Label text="⚠️" style="-fx-font-size: 48px;"/>
+                    <Label fx:id="pendingReportsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #e74c3c;">
+                        <font>
+                            <Font name="System Bold" size="36.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Pending Reports" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Total Reviews -->
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="1"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);"
+                      minWidth="220" minHeight="150">
+                    <Label text="⭐" style="-fx-font-size: 48px;"/>
+                    <Label fx:id="totalReviewsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #f39c12;">
+                        <font>
+                            <Font name="System Bold" size="36.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Total Reviews" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+
+                <!-- Active Hosts -->
+                <VBox GridPane.columnIndex="2" GridPane.rowIndex="1"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);"
+                      minWidth="220" minHeight="150">
+                    <Label text="🏘️" style="-fx-font-size: 48px;"/>
+                    <Label fx:id="activeHostsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #16a085;">
+                        <font>
+                            <Font name="System Bold" size="36.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Active Hosts" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                </VBox>
+            </GridPane>
+
+            <!-- Action Buttons -->
+            <HBox spacing="20" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+                <Button text="📊 View All Reports"
+                        onAction="#handleViewReports"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 15 30; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+
+                <Button text="🔄 Refresh Statistics"
+                        onAction="#handleRefresh"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 15 30; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+            </HBox>
+
+        </VBox>
+    </center>
+
+    <!-- Bottom Bar -->
+    <bottom>
+        <HBox style="-fx-background-color: #34495e; -fx-padding: 10;" alignment="CENTER">
+            <Label text="© 2025 Saraye - Admin Control Panel" style="-fx-text-fill: white;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

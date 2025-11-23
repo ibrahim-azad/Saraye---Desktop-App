@@ -2,15 +2,16 @@ package controllers;
 
 import models.Report;
 import databases.ReportDAO;
+import databases.DAOFactory;
 import utils.SessionManager;
 
 public class ReportController {
     private static ReportController instance;
     private ReportDAO reportDAO;
     private SessionManager sessionManager;
-    
+
     private ReportController() {
-        this.reportDAO = new ReportDAO();
+        this.reportDAO = DAOFactory.getReportDAO();
         this.sessionManager = SessionManager.getInstance();
     }
     

@@ -177,4 +177,25 @@ public class BookingDAO {
             return "B001";
         }
     }
+
+    public List<Booking> getAllBookings() {
+        List<Booking> bookings = new ArrayList<>();
+        String sql = "SELECT * FROM Bookings";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Booking b = new Booking(
+                    rs.getString("bookingID"),
+                    rs.getString("guestID"),
+                    rs.getString("propertyID"),
+                    rs.getDate("checkInDate").toLocalDate(),
+                    rs.getDate("checkOutDate").toLocalDate(),
+                    rs.getDouble("totalPrice"),
+                    rs.getString("status"));
+                bookings.add(b);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookings;
+    }
 }

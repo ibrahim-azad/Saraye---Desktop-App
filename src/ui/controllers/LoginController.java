@@ -121,8 +121,8 @@ public class LoginController {
                 break;
 
             case "admin":
-                // TODO: Create admin dashboard
-                AlertUtil.showInfo("Admin Login", "Admin dashboard not yet implemented");
+                // Admin gets dedicated admin dashboard with metrics
+                NavigationUtil.navigateTo("admin-dashboard.fxml", user);
                 break;
 
             default:

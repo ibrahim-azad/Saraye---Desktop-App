@@ -131,4 +131,8 @@ public class MockBookingDAO extends BookingDAO {
         }
         return false;
     }
+
+    public List<Booking> getAllBookings() {
+        return new ArrayList<>(bookings);
+    }
 }

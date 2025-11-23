@@ -4,6 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.User;
+import models.Property;
 
 /**
  * NavigationUtil - Utility class for handling screen navigation
@@ -62,6 +64,10 @@ public class NavigationUtil {
                 }
             }
 
+            // Preserve current window size
+            double currentWidth = primaryStage.getWidth();
+            double currentHeight = primaryStage.getHeight();
+
             // Set scene and show
             Scene scene = new Scene(root);
 
@@ -74,6 +80,13 @@ public class NavigationUtil {
             }
 
             primaryStage.setScene(scene);
+
+            // Restore window size to prevent auto-resizing
+            if (currentWidth > 0 && currentHeight > 0) {
+                primaryStage.setWidth(currentWidth);
+                primaryStage.setHeight(currentHeight);
+            }
+
             primaryStage.show();
 
         } catch (Exception e) {
@@ -96,32 +109,36 @@ public class NavigationUtil {
             if (dataObjects != null && dataObjects.length > 0) {
                 Object controller = loader.getController();
 
-                // Handle first object (usually User)
-                if (dataObjects.length >= 1 && dataObjects[0] != null) {
+                // Try setData(User, Property) method first (for two parameters)
+                if (dataObjects.length >= 2) {
                     try {
                         controller.getClass()
-                                .getMethod("setUser", Object.class)
-                                .invoke(controller, dataObjects[0]);
+                                .getMethod("setData", User.class, Property.class)
+                                .invoke(controller, dataObjects[0], dataObjects[1]);
                     } catch (NoSuchMethodException e) {
-                        System.out.println("Warning: Controller doesn't have setUser method");
+                        // Try generic setData(Object, Object)
+                        try {
+                            controller.getClass()
+                                    .getMethod("setData", Object.class, Object.class)
+                                    .invoke(controller, dataObjects[0], dataObjects[1]);
+                        } catch (NoSuchMethodException ex) {
+                            // Fall back to individual setUser/setData calls
+                            handleIndividualSetters(controller, dataObjects);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-
-                // Handle second object (usually Property or other data)
-                if (dataObjects.length >= 2 && dataObjects[1] != null) {
-                    try {
-                        controller.getClass()
-                                .getMethod("setData", Object.class)
-                                .invoke(controller, dataObjects[1]);
-                    } catch (NoSuchMethodException e) {
-                        System.out.println("Warning: Controller doesn't have setData method");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                } else {
+                    // Single data object - use setUser
+                    handleIndividualSetters(controller, dataObjects);
                 }
             }
+
+            // Preserve current window size
+            double currentWidth = primaryStage.getWidth();
+            double currentHeight = primaryStage.getHeight();
 
             Scene scene = new Scene(root);
 
@@ -134,11 +151,49 @@ public class NavigationUtil {
             }
 
             primaryStage.setScene(scene);
+
+            // Restore window size to prevent auto-resizing
+            if (currentWidth > 0 && currentHeight > 0) {
+                primaryStage.setWidth(currentWidth);
+                primaryStage.setHeight(currentHeight);
+            }
+
             primaryStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();
             AlertUtil.showError("Navigation Error", "Could not load screen: " + fxmlFile);
+        }
+    }
+
+    /**
+     * Helper method to handle individual setUser/setData calls
+     */
+    private static void handleIndividualSetters(Object controller, Object[] dataObjects) {
+        // Handle first object (usually User)
+        if (dataObjects.length >= 1 && dataObjects[0] != null) {
+            try {
+                controller.getClass()
+                        .getMethod("setUser", Object.class)
+                        .invoke(controller, dataObjects[0]);
+            } catch (NoSuchMethodException e) {
+                System.out.println("Warning: Controller doesn't have setUser method");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Handle second object (usually Property or other data)
+        if (dataObjects.length >= 2 && dataObjects[1] != null) {
+            try {
+                controller.getClass()
+                        .getMethod("setData", Object.class)
+                        .invoke(controller, dataObjects[1]);
+            } catch (NoSuchMethodException e) {
+                System.out.println("Warning: Controller doesn't have setData method");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

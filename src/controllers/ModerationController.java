@@ -2,6 +2,7 @@ package controllers;
 
 import models.Report;
 import databases.ReportDAO;
+import databases.DAOFactory;
 import utils.SessionManager;
 import java.util.List;
 
@@ -9,9 +10,9 @@ public class ModerationController {
     private static ModerationController instance;
     private ReportDAO reportDAO;
     private SessionManager sessionManager;
-    
+
     private ModerationController() {
-        this.reportDAO = new ReportDAO();
+        this.reportDAO = DAOFactory.getReportDAO();
         this.sessionManager = SessionManager.getInstance();
     }
     

@@ -86,6 +86,16 @@ public class HostDashboardController {
     }
 
     /**
+     * Handle Moderation button
+     * Navigate to admin moderation screen
+     * UC12: Report/Dispute
+     */
+    @FXML
+    private void handleModeration() {
+        NavigationUtil.navigateTo("admin-moderation.fxml", currentUser);
+    }
+
+    /**
      * Handle My Profile button
      * UC9: Manage Account
      */

@@ -2,6 +2,8 @@ package databases;
 
 import models.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
     private Connection conn;
@@ -144,5 +146,39 @@ public class UserDAO {
             e.printStackTrace();
             return prefix + "001";
         }
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM Users";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String userID = rs.getString("userID");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String phone = rs.getString("phone");
+                String role = rs.getString("role");
+
+                User user = null;
+                switch (role.toUpperCase()) {
+                    case "GUEST":
+                        user = new Guest(userID, name, email, password, phone);
+                        break;
+                    case "HOST":
+                        user = new Host(userID, name, email, password, phone);
+                        break;
+                    case "ADMIN":
+                        user = new Admin(userID, name, email, password, phone);
+                        break;
+                }
+                if (user != null) {
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }

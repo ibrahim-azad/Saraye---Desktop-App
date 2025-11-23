@@ -19,7 +19,7 @@ public class DAOFactory {
      * true = Use mock DAOs (no database required)
      * false = Use real DAOs (requires MS SQL Server connection)
      */
-    public static final boolean UI_ONLY_MODE = false;
+    public static final boolean UI_ONLY_MODE = true;
 
     // Singleton instances for mock DAOs (to maintain state across the app in
     // UI-only mode)
@@ -27,6 +27,7 @@ public class DAOFactory {
     private static MockBookingDAO mockBookingDAO;
     private static MockUserDAO mockUserDAO;
     private static MockReviewDAO mockReviewDAO;
+    private static MockReportDAO mockReportDAO;
 
     /**
      * Get PropertyDAO instance (real or mock based on UI_ONLY_MODE).
@@ -85,6 +86,20 @@ public class DAOFactory {
     }
 
     /**
+     * Get ReportDAO instance (real or mock based on UI_ONLY_MODE).
+     */
+    public static ReportDAO getReportDAO() {
+        if (UI_ONLY_MODE) {
+            if (mockReportDAO == null) {
+                mockReportDAO = new MockReportDAO();
+            }
+            return mockReportDAO;
+        } else {
+            return new ReportDAO();
+        }
+    }
+
+    /**
      * Reset all mock DAO singletons (useful for testing).
      */
     public static void resetMocks() {
@@ -92,5 +107,6 @@ public class DAOFactory {
         mockBookingDAO = null;
         mockUserDAO = null;
         mockReviewDAO = null;
+        mockReportDAO = null;
     }
 }

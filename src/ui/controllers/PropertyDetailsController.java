@@ -117,6 +117,17 @@ public class PropertyDetailsController {
     }
 
     /**
+     * Handle Report Property button
+     * Navigate to report issue screen
+     * UC12: Report/Dispute
+     */
+    @FXML
+    private void handleReportProperty() {
+        // Navigate to report issue screen with user and property data
+        NavigationUtil.navigateWithMultipleData("report-issue.fxml", currentUser, currentProperty);
+    }
+
+    /**
      * Handle Back button
      * Return to appropriate dashboard based on user role
      */
