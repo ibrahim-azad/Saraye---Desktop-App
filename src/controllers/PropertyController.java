@@ -2,6 +2,7 @@ package controllers;
 
 import models.Property;
 import databases.PropertyDAO;
+import databases.DAOFactory;
 import utils.SessionManager;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class PropertyController {
     private SessionManager sessionManager;
 
     private PropertyController() {
-        this.propertyDAO = new PropertyDAO();
+        this.propertyDAO = DAOFactory.getPropertyDAO();
         this.sessionManager = SessionManager.getInstance();
     }
 

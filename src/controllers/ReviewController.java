@@ -2,6 +2,7 @@ package controllers;
 
 import models.Review;
 import databases.ReviewDAO;
+import databases.DAOFactory;
 import utils.SessionManager;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ReviewController {
     private SessionManager sessionManager;
 
     private ReviewController() {
-        this.reviewDAO = new ReviewDAO();
+        this.reviewDAO = DAOFactory.getReviewDAO();
         this.sessionManager = SessionManager.getInstance();
     }
 

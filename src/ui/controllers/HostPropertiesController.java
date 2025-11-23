@@ -163,7 +163,7 @@ public class HostPropertiesController {
      */
     private void loadProperties() {
         if (currentUser != null) {
-            PropertyDAO propertyDAO = new PropertyDAO();
+            PropertyDAO propertyDAO = databases.DAOFactory.getPropertyDAO();
             allProperties = propertyDAO.getPropertiesByHostId(currentUser.getUserId());
         } else {
             allProperties = new ArrayList<>();
@@ -249,7 +249,7 @@ public class HostPropertiesController {
                         "This action cannot be undone!");
 
         if (confirmed) {
-            PropertyDAO propertyDAO = new PropertyDAO();
+            PropertyDAO propertyDAO = databases.DAOFactory.getPropertyDAO();
             boolean success = propertyDAO.deleteProperty(property.getPropertyID());
 
             if (success) {

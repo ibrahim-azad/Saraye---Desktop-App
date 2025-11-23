@@ -14,7 +14,7 @@ mkdir bin
 
 REM Compile Java files
 echo Compiling Java source files...
-javac -d bin -cp "lib/*;D:/Java/lib/mssql-jdbc-13.2.1.jre8.jar" src/Main.java src/models/*.java src/utils/*.java src/ui/utils/*.java src/databases/*.java src/controllers/*.java src/ui/controllers/*.java
+javac -d bin -cp "lib/*;D:/Java/lib/mssql-jdbc-13.2.1.jre8.jar" src/Main.java src/models/*.java src/utils/*.java src/ui/utils/*.java src/databases/*.java src/databases/mock/*.java src/controllers/*.java src/ui/controllers/*.java
 
 if %ERRORLEVEL% NEQ 0 (
     echo.

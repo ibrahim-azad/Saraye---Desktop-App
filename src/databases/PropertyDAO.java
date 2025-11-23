@@ -12,6 +12,11 @@ public class PropertyDAO {
         this.conn = DatabaseConnection.getInstance().getConnection();
     }
 
+    // Protected constructor for mock DAOs (skips database initialization)
+    protected PropertyDAO(boolean skipInit) {
+        this.conn = null;
+    }
+
     public boolean saveProperty(Property property) {
         String sqlAddress = "INSERT INTO Addresses (addressID, street, city, country, zipCode) VALUES (?, ?, ?, ?, ?)";
         String sqlProperty = "INSERT INTO Properties (propertyID, hostID, addressID, title, description, pricePerNight, maxGuests, bedrooms, bathrooms, isActive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";

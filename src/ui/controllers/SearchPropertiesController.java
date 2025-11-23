@@ -200,7 +200,7 @@ public class SearchPropertiesController {
      * Load properties from database for initial display
      */
     private void loadPropertiesFromDatabase() {
-        PropertyDAO propertyDAO = new PropertyDAO();
+        PropertyDAO propertyDAO = databases.DAOFactory.getPropertyDAO();
         List<Property> properties = propertyDAO.getAllProperties();
         resultsTable.getItems().clear();
         resultsTable.getItems().addAll(properties);
@@ -212,7 +212,7 @@ public class SearchPropertiesController {
      */
     private List<Property> searchPropertiesInDatabase(String city, LocalDate checkIn, LocalDate checkOut,
             String numGuestsStr, String minPriceStr, String maxPriceStr) {
-        PropertyDAO propertyDAO = new PropertyDAO();
+        PropertyDAO propertyDAO = databases.DAOFactory.getPropertyDAO();
         List<Property> allProperties = propertyDAO.getAllProperties();
         List<Property> filtered = new ArrayList<>();
 

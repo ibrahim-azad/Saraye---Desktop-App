@@ -10,6 +10,11 @@ public class UserDAO {
         this.conn = DatabaseConnection.getInstance().getConnection();
     }
 
+    // Protected constructor for mock DAOs (skips database initialization)
+    protected UserDAO(boolean skipInit) {
+        this.conn = null;
+    }
+
     // REGISTER: Save a new user
     public boolean saveUser(User user) {
         // Generate user ID if not provided

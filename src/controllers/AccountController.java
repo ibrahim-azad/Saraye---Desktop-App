@@ -2,6 +2,7 @@ package controllers;
 
 import models.User;
 import databases.UserDAO;
+import databases.DAOFactory;
 import utils.SessionManager;
 
 public class AccountController {
@@ -10,7 +11,7 @@ public class AccountController {
     private SessionManager sessionManager;
 
     private AccountController() {
-        this.userDAO = new UserDAO();
+        this.userDAO = DAOFactory.getUserDAO();
         this.sessionManager = SessionManager.getInstance();
     }
 

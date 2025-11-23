@@ -2,6 +2,7 @@ package controllers;
 
 import models.*;
 import databases.UserDAO;
+import databases.DAOFactory;
 import utils.SessionManager;
 
 /**
@@ -20,7 +21,7 @@ public class AuthController {
 
     // Private constructor
     private AuthController() {
-        this.userDAO = new UserDAO();
+        this.userDAO = DAOFactory.getUserDAO();
         this.sessionManager = SessionManager.getInstance();
     }
 

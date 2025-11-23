@@ -12,6 +12,11 @@ public class BookingDAO {
         this.conn = DatabaseConnection.getInstance().getConnection();
     }
 
+    // Protected constructor for mock DAOs (skips database initialization)
+    protected BookingDAO(boolean skipInit) {
+        this.conn = null;
+    }
+
     public boolean createBooking(Booking booking) {
         String sql = "INSERT INTO Bookings (bookingID, guestID, propertyID, checkInDate, checkOutDate, totalPrice, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, SYSDATETIME())";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

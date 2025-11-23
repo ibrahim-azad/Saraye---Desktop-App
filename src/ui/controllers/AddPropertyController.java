@@ -54,7 +54,7 @@ public class AddPropertyController {
 
     private User currentUser;
     private List<CheckBox> amenityCheckBoxes = new ArrayList<>();
-    private PropertyDAO propertyDAO = new PropertyDAO();
+    private PropertyDAO propertyDAO = databases.DAOFactory.getPropertyDAO();
 
     /**
      * Initialize method - loads amenities from database

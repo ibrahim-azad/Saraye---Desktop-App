@@ -12,6 +12,11 @@ public class ReviewDAO {
         this.conn = DatabaseConnection.getInstance().getConnection();
     }
 
+    // Protected constructor for mock DAOs (skips database initialization)
+    protected ReviewDAO(boolean skipInit) {
+        this.conn = null;
+    }
+
     public boolean addReview(Review review) {
         String sql = "INSERT INTO Reviews (reviewID, bookingID, rating, comment, reviewDate) VALUES (?, ?, ?, ?, SYSDATETIME())";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

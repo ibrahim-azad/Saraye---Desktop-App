@@ -210,7 +210,7 @@ public class HostBookingsController {
 
         if (confirmed) {
             // Update booking status in database
-            BookingDAO bookingDAO = new BookingDAO();
+            BookingDAO bookingDAO = databases.DAOFactory.getBookingDAO();
             boolean success = bookingDAO.updateStatus(booking.getBookingID(), "APPROVED");
 
             if (success) {
@@ -241,7 +241,7 @@ public class HostBookingsController {
 
         if (confirmed) {
             // Update booking status in database
-            BookingDAO bookingDAO = new BookingDAO();
+            BookingDAO bookingDAO = databases.DAOFactory.getBookingDAO();
             boolean success = bookingDAO.updateStatus(booking.getBookingID(), "DECLINED");
 
             if (success) {
@@ -263,7 +263,7 @@ public class HostBookingsController {
      */
     private void loadBookingsFromDatabase() {
         if (currentUser != null) {
-            BookingDAO bookingDAO = new BookingDAO();
+            BookingDAO bookingDAO = databases.DAOFactory.getBookingDAO();
             allBookings = bookingDAO.getBookingsByHost(currentUser.getUserId());
         } else {
             allBookings = new ArrayList<>();

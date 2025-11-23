@@ -2,6 +2,7 @@ package controllers;
 
 import models.Booking;
 import databases.BookingDAO;
+import databases.DAOFactory;
 import utils.SessionManager;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class BookingController {
     private SessionManager sessionManager;
 
     private BookingController() {
-        this.bookingDAO = new BookingDAO();
+        this.bookingDAO = DAOFactory.getBookingDAO();
         this.sessionManager = SessionManager.getInstance();
     }
 
