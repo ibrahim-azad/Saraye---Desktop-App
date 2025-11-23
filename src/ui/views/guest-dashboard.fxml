@@ -4,28 +4,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.GuestDashboardController"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="root"
+            stylesheets="@../../resources/css/style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
-            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;">
-                <font>
-                    <Font name="System Bold" size="24.0"/>
-                </font>
-            </Label>
+        <HBox styleClass="header-bar" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
 
             <Region HBox.hgrow="ALWAYS"/>
 
             <Label fx:id="welcomeLabel" text="Welcome, Guest!" style="-fx-text-fill: white; -fx-font-size: 16px;"/>
 
+            <Button text="My Profile"
+                    onAction="#handleViewProfile"
+                    styleClass="back-button"/>
+
             <Button text="Logout"
                     onAction="#handleLogout"
-                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="button-danger"/>
         </HBox>
     </top>
 
@@ -35,12 +41,12 @@
 
             <!-- Welcome Section -->
             <VBox alignment="CENTER" spacing="10">
-                <Label text="Guest Dashboard" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                <Label text="Guest Dashboard" styleClass="page-title">
                     <font>
-                        <Font name="System Bold" size="32.0"/>
+                        <Font name="Poppins" size="32.0"/>
                     </font>
                 </Label>
-                <Label text="Find your perfect property rental" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;"/>
+                <Label text="Find your perfect property rental" styleClass="subtitle"/>
             </VBox>
 
             <!-- Action Cards -->
@@ -50,92 +56,88 @@
                 <VBox GridPane.columnIndex="0" GridPane.rowIndex="0"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="🔍" style="-fx-font-size: 48px;"/>
-                    <Label text="Search Properties" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="🔍 Search Properties" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
                     <Label text="Browse available properties in your area"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="Search Now"
                             onAction="#handleSearchProperties"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-primary"/>
                 </VBox>
 
                 <!-- My Bookings Card -->
                 <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="📅" style="-fx-font-size: 48px;"/>
-                    <Label text="My Bookings" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="📅 My Bookings" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
                     <Label text="View and manage your reservations"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="View Bookings"
                             onAction="#handleMyBookings"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-secondary"/>
                 </VBox>
 
                 <!-- My Profile Card -->
                 <VBox GridPane.columnIndex="0" GridPane.rowIndex="1"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="👤" style="-fx-font-size: 48px;"/>
-                    <Label text="My Profile" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="My Profile" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
                     <Label text="Update your account information"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="View Profile"
                             onAction="#handleViewProfile"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #16a085; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-accent"/>
                 </VBox>
 
                 <!-- Become a Host Card -->
                 <VBox GridPane.columnIndex="1" GridPane.rowIndex="1"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="🏠" style="-fx-font-size: 48px;"/>
-                    <Label text="Become a Host" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="🏠 Become a Host" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
-                    <Label text="List your property and earn"
+                    <Label text="List your property and earn income"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="Start Hosting"
                             onAction="#handleBecomeHost"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-warning"/>
                 </VBox>
 
             </GridPane>
@@ -145,7 +147,7 @@
 
     <!-- Bottom Bar -->
     <bottom>
-        <HBox style="-fx-background-color: #34495e; -fx-padding: 10;" alignment="CENTER">
+        <HBox style="-fx-background-color: linear-gradient(to right, #8B6F47, #A0826D); -fx-padding: 10;" alignment="CENTER">
             <Label text="© 2025 Saraye - Property Rental Platform" style="-fx-text-fill: white;"/>
         </HBox>
     </bottom>

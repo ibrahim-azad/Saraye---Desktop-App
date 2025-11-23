@@ -14,8 +14,8 @@ if not exist bin\Main.class (
     exit /b 1
 )
 
-REM Set JavaFX SDK path - Using installed JavaFX SDK
-set JAVAFX_PATH=C:\Java\javafx-sdk-21.0.9\lib
+REM Set JavaFX SDK path - Using installed JavaFX SDK (updated to D: drive)
+set JAVAFX_PATH=D:\Java\javafx-sdk-21.0.9\lib
 
 echo Using JavaFX SDK from: %JAVAFX_PATH%
 echo.

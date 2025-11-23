@@ -13,13 +13,20 @@ import ui.utils.NavigationUtil;
  */
 public class AdminDashboardController {
 
-    @FXML private Label welcomeLabel;
-    @FXML private Label totalUsersLabel;
-    @FXML private Label totalPropertiesLabel;
-    @FXML private Label totalBookingsLabel;
-    @FXML private Label pendingReportsLabel;
-    @FXML private Label totalReviewsLabel;
-    @FXML private Label activeHostsLabel;
+    @FXML
+    private Label welcomeLabel;
+    @FXML
+    private Label totalUsersLabel;
+    @FXML
+    private Label totalPropertiesLabel;
+    @FXML
+    private Label totalBookingsLabel;
+    @FXML
+    private Label pendingReportsLabel;
+    @FXML
+    private Label totalReviewsLabel;
+    @FXML
+    private Label activeHostsLabel;
 
     private User currentUser;
 
@@ -39,19 +46,55 @@ public class AdminDashboardController {
 
     private void loadStatistics() {
         try {
-            // Get statistics from DAOs
-            int totalUsers = DAOFactory.getUserDAO().getAllUsers().size();
-            int totalProperties = DAOFactory.getPropertyDAO().getAllProperties().size();
-            int totalBookings = DAOFactory.getBookingDAO().getAllBookings().size();
-            int pendingReports = ModerationController.getInstance().getPendingReports().size();
-            int totalReviews = DAOFactory.getReviewDAO().getAllReviews().size();
+            // Get statistics from DAOs with proper error handling
+            int totalUsers = 0;
+            int totalProperties = 0;
+            int totalBookings = 0;
+            int pendingReports = 0;
+            int totalReviews = 0;
+            int activeHosts = 0;
 
-            // Count active hosts (users with HOST or BOTH role)
-            int activeHosts = (int) DAOFactory.getUserDAO().getAllUsers().stream()
-                    .filter(u -> "HOST".equalsIgnoreCase(u.getRole()) || "BOTH".equalsIgnoreCase(u.getRole()))
-                    .count();
+            try {
+                totalUsers = DAOFactory.getUserDAO().getAllUsers().size();
+            } catch (Exception e) {
+                System.out.println("Error loading users: " + e.getMessage());
+            }
 
-            // Update labels
+            try {
+                totalProperties = DAOFactory.getPropertyDAO().getAllProperties().size();
+            } catch (Exception e) {
+                System.out.println("Error loading properties: " + e.getMessage());
+            }
+
+            try {
+                totalBookings = DAOFactory.getBookingDAO().getAllBookings().size();
+            } catch (Exception e) {
+                System.out.println("Error loading bookings: " + e.getMessage());
+            }
+
+            try {
+                pendingReports = ModerationController.getInstance().getPendingReports().size();
+            } catch (Exception e) {
+                System.out.println("Error loading reports: " + e.getMessage());
+            }
+
+            try {
+                totalReviews = DAOFactory.getReviewDAO().getAllReviews().size();
+            } catch (Exception e) {
+                System.out.println("Error loading reviews: " + e.getMessage());
+            }
+
+            try {
+                // Count active hosts (users with HOST or BOTH role)
+                activeHosts = (int) DAOFactory.getUserDAO().getAllUsers().stream()
+                        .filter(u -> u != null && u.getRole() != null &&
+                                ("HOST".equalsIgnoreCase(u.getRole()) || "BOTH".equalsIgnoreCase(u.getRole())))
+                        .count();
+            } catch (Exception e) {
+                System.out.println("Error counting hosts: " + e.getMessage());
+            }
+
+            // Update labels with actual values
             totalUsersLabel.setText(String.valueOf(totalUsers));
             totalPropertiesLabel.setText(String.valueOf(totalProperties));
             totalBookingsLabel.setText(String.valueOf(totalBookings));
@@ -61,7 +104,15 @@ public class AdminDashboardController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            AlertUtil.showError("Error", "Failed to load statistics: " + e.getMessage());
+            // Set default values if complete failure
+            totalUsersLabel.setText("0");
+            totalPropertiesLabel.setText("0");
+            totalBookingsLabel.setText("0");
+            pendingReportsLabel.setText("0");
+            totalReviewsLabel.setText("0");
+            activeHostsLabel.setText("0");
+
+            AlertUtil.showError("Error", "Failed to load statistics. Please check database connection.");
         }
     }
 

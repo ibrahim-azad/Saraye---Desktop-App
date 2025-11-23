@@ -36,7 +36,10 @@ public class BookingDAO {
 
     public List<Booking> getBookingsByGuest(String guestID) {
         List<Booking> list = new ArrayList<>();
-        String sql = "SELECT * FROM Bookings WHERE guestID = ?";
+        String sql = "SELECT b.*, p.title as propertyTitle " +
+                "FROM Bookings b " +
+                "JOIN Properties p ON b.propertyID = p.propertyID " +
+                "WHERE b.guestID = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, guestID);
             ResultSet rs = stmt.executeQuery();
@@ -49,6 +52,7 @@ public class BookingDAO {
                         rs.getDate("checkOutDate").toLocalDate(),
                         rs.getDouble("totalPrice"),
                         rs.getString("status"));
+                b.setPropertyTitle(rs.getString("propertyTitle"));
                 list.add(b);
             }
         } catch (SQLException e) {
@@ -137,12 +141,15 @@ public class BookingDAO {
 
     // Get single booking by ID
     public Booking getBookingById(String bookingID) {
-        String sql = "SELECT * FROM Bookings WHERE bookingID = ?";
+        String sql = "SELECT b.*, p.title as propertyTitle " +
+                "FROM Bookings b " +
+                "JOIN Properties p ON b.propertyID = p.propertyID " +
+                "WHERE b.bookingID = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, bookingID);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Booking(
+                Booking b = new Booking(
                         rs.getString("bookingID"),
                         rs.getString("guestID"),
                         rs.getString("propertyID"),
@@ -150,6 +157,8 @@ public class BookingDAO {
                         rs.getDate("checkOutDate").toLocalDate(),
                         rs.getDouble("totalPrice"),
                         rs.getString("status"));
+                b.setPropertyTitle(rs.getString("propertyTitle"));
+                return b;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -184,13 +193,13 @@ public class BookingDAO {
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Booking b = new Booking(
-                    rs.getString("bookingID"),
-                    rs.getString("guestID"),
-                    rs.getString("propertyID"),
-                    rs.getDate("checkInDate").toLocalDate(),
-                    rs.getDate("checkOutDate").toLocalDate(),
-                    rs.getDouble("totalPrice"),
-                    rs.getString("status"));
+                        rs.getString("bookingID"),
+                        rs.getString("guestID"),
+                        rs.getString("propertyID"),
+                        rs.getDate("checkInDate").toLocalDate(),
+                        rs.getDate("checkOutDate").toLocalDate(),
+                        rs.getDouble("totalPrice"),
+                        rs.getString("status"));
                 bookings.add(b);
             }
         } catch (SQLException e) {

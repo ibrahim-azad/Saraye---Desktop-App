@@ -20,7 +20,7 @@ public class ReportDAO {
     }
 
     public boolean createReport(Report report) {
-        String sql = "INSERT INTO Reports (reportID, propertyId, reporterId, description, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Reports (reportID, propertyID, reporterID, description, status) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, report.getReportID());
             stmt.setString(2, report.getPropertyId());
@@ -41,8 +41,8 @@ public class ReportDAO {
             while (rs.next()) {
                 Report report = new Report(
                         rs.getString("reportID"),
-                        rs.getString("propertyId"),
-                        rs.getString("reporterId"),
+                        rs.getString("propertyID"),
+                        rs.getString("reporterID"),
                         rs.getString("description"),
                         rs.getString("status"));
                 list.add(report);
@@ -61,8 +61,8 @@ public class ReportDAO {
             while (rs.next()) {
                 Report report = new Report(
                         rs.getString("reportID"),
-                        rs.getString("propertyId"),
-                        rs.getString("reporterId"),
+                        rs.getString("propertyID"),
+                        rs.getString("reporterID"),
                         rs.getString("description"),
                         rs.getString("status"));
                 list.add(report);

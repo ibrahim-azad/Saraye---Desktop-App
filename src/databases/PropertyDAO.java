@@ -268,6 +268,14 @@ public class PropertyDAO {
                         addr);
                 prop.setDescription(rs.getString("description"));
 
+                // Set status - default to "available" if column doesn't exist or is null
+                try {
+                    String status = rs.getString("status");
+                    prop.setStatus(status != null ? status : "available");
+                } catch (SQLException e) {
+                    prop.setStatus("available"); // Default status
+                }
+
                 // Set additional property details
                 try {
                     prop.setMaxGuests(rs.getInt("maxGuests"));

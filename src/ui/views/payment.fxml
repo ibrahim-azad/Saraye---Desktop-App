@@ -4,20 +4,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.PaymentUIController"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="root"
+            stylesheets="@../../resources/css/style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
-            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <HBox styleClass="header-bar" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
             <Region HBox.hgrow="ALWAYS"/>
             <Button text="← Back"
                     onAction="#handleBack"
-                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="back-button"/>
         </HBox>
     </top>
 
@@ -28,14 +34,13 @@
 
                 <!-- Page Title -->
                 <VBox spacing="10" alignment="CENTER">
-                    <Label text="💳" style="-fx-font-size: 64px;"/>
-                    <Label text="Complete Payment" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-                    <Label text="Secure your booking with payment" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                    <Label text="💎 Complete Payment" styleClass="page-title"/>
+                    <Label text="Secure your booking with payment" styleClass="subtitle"/>
                 </VBox>
 
                 <!-- Booking Summary Card -->
                 <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-border-color: #3498db; -fx-border-width: 2; -fx-border-radius: 10;">
-                    <Label text="Booking Summary" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    <Label text="📅 Booking Summary" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
                     
                     <HBox spacing="10">
                         <Label text="Booking ID:" style="-fx-font-weight: bold; -fx-min-width: 120;"/>
@@ -86,7 +91,7 @@
                     <Label text="Card Details" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
                     
                     <VBox spacing="5">
-                        <Label text="Card Number *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <Label text="Card Number *" styleClass="label-bold"/>
                         <TextField fx:id="cardNumberField" 
                                   promptText="1234 5678 9012 3456"
                                   style="-fx-padding: 12; -fx-font-size: 14px;"/>
@@ -94,14 +99,14 @@
                     
                     <HBox spacing="15">
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
-                            <Label text="Expiry Date *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                            <Label text="Expiry Date *" styleClass="label-bold"/>
                             <TextField fx:id="expiryField" 
                                       promptText="MM/YY"
                                       style="-fx-padding: 12; -fx-font-size: 14px;"/>
                         </VBox>
                         
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
-                            <Label text="CVV *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                            <Label text="CVV *" styleClass="label-bold"/>
                             <TextField fx:id="cvvField" 
                                       promptText="123"
                                       style="-fx-padding: 12; -fx-font-size: 14px;"/>
@@ -109,7 +114,7 @@
                     </HBox>
                     
                     <VBox spacing="5">
-                        <Label text="Cardholder Name *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <Label text="Cardholder Name *" styleClass="label-bold"/>
                         <TextField fx:id="cardHolderField" 
                                   promptText="Name as on card"
                                   style="-fx-padding: 12; -fx-font-size: 14px;"/>
@@ -121,14 +126,14 @@
                     <Label text="Mobile Wallet Details" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
                     
                     <VBox spacing="5">
-                        <Label text="Mobile Number *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <Label text="Mobile Number *" styleClass="label-bold"/>
                         <TextField fx:id="mobileNumberField" 
                                   promptText="03XX-XXXXXXX"
                                   style="-fx-padding: 12; -fx-font-size: 14px;"/>
                     </VBox>
                     
                     <VBox spacing="5">
-                        <Label text="Account Name *" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                        <Label text="Account Name *" styleClass="label-bold"/>
                         <TextField fx:id="accountNameField" 
                                   promptText="Account holder name"
                                   style="-fx-padding: 12; -fx-font-size: 14px;"/>

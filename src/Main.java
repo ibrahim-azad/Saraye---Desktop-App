@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import ui.utils.NavigationUtil;
 
 /**
@@ -18,6 +19,14 @@ public class Main extends Application {
         try {
             // Set application title
             primaryStage.setTitle("Saraye - Property Rental Platform");
+
+            // Set application icon
+            try {
+                Image icon = new Image(getClass().getResourceAsStream("/resources/images/icon.png"));
+                primaryStage.getIcons().add(icon);
+            } catch (Exception e) {
+                System.err.println("Could not load application icon: " + e.getMessage());
+            }
 
             // Set primary stage for navigation
             NavigationUtil.setPrimaryStage(primaryStage);

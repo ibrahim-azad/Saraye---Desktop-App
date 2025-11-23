@@ -4,20 +4,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.PropertyDetailsController"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="root"
+            stylesheets="@../../resources/css/style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
-            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <HBox styleClass="header-bar" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
             <Region HBox.hgrow="ALWAYS"/>
             <Button text="← Back to Search"
                     onAction="#handleBack"
-                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="back-button"/>
         </HBox>
     </top>
 

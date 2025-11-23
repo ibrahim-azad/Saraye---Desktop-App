@@ -4,41 +4,52 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.AddPropertyController"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="root"
+            stylesheets="@../../resources/css/style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
-            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <HBox styleClass="header-bar" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
             <Region HBox.hgrow="ALWAYS"/>
             <Button text="← Back to Dashboard"
                     onAction="#handleBack"
-                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="back-button"/>
         </HBox>
     </top>
 
     <!-- Center Content -->
     <center>
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
-            <VBox spacing="20" style="-fx-padding: 20; -fx-max-width: 800; -fx-alignment: center;">
+            <HBox alignment="CENTER" style="-fx-padding: 30;">
+                <VBox spacing="20" style="-fx-max-width: 800;" alignment="TOP_CENTER">
 
                 <!-- Page Title -->
                 <VBox spacing="10" alignment="CENTER">
-                    <Label text="Add New Property" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-                    <Label text="Fill in the details below to list your property" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+                    <Label text="🏠 Add New Property" styleClass="page-title"/>
+                    <Label text="Fill in the details below to list your property" styleClass="subtitle"/>
                 </VBox>
 
                 <!-- Basic Information -->
-                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
-                    <Label text="Basic Information" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <VBox spacing="15" styleClass="content-card">
+                    <Label text="ℹ️ Basic Information" styleClass="subsection-title">
+                        <font>
+                            <Font name="Poppins" size="18.0"/>
+                        </font>
+                    </Label>
 
                     <!-- Title -->
                     <VBox spacing="5">
-                        <Label text="Property Title *" style="-fx-font-weight: bold;"/>
+                        <Label text="Property Title *" styleClass="label-bold"/>
                         <TextField fx:id="titleField"
                                   promptText="e.g., Luxury Apartment in DHA"
                                   style="-fx-padding: 10;"/>
@@ -46,7 +57,7 @@
 
                     <!-- Description -->
                     <VBox spacing="5">
-                        <Label text="Description *" style="-fx-font-weight: bold;"/>
+                        <Label text="Description *" styleClass="label-bold"/>
                         <TextArea fx:id="descriptionArea"
                                  promptText="Describe your property in detail..."
                                  wrapText="true"
@@ -57,13 +68,17 @@
                 </VBox>
 
                 <!-- Location -->
-                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
-                    <Label text="Location" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <VBox spacing="15" styleClass="content-card">
+                    <Label text="📍 Location" styleClass="subsection-title">
+                        <font>
+                            <Font name="Poppins" size="18.0"/>
+                        </font>
+                    </Label>
 
                     <GridPane hgap="15" vgap="15">
                         <!-- Address -->
                         <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5">
-                            <Label text="Address *" style="-fx-font-weight: bold;"/>
+                            <Label text="Address *" styleClass="label-bold"/>
                             <TextField fx:id="addressField"
                                       promptText="e.g., DHA Phase 5"
                                       style="-fx-padding: 10;"/>
@@ -71,7 +86,7 @@
 
                         <!-- City -->
                         <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
-                            <Label text="City *" style="-fx-font-weight: bold;"/>
+                            <Label text="City *" styleClass="label-bold"/>
                             <TextField fx:id="cityField"
                                       promptText="e.g., Lahore"
                                       style="-fx-padding: 10;"/>
@@ -81,13 +96,17 @@
                 </VBox>
 
                 <!-- Property Details -->
-                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
-                    <Label text="Property Details" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <VBox spacing="15" styleClass="content-card">
+                    <Label text="💎 Property Details" styleClass="subsection-title">
+                        <font>
+                            <Font name="Poppins" size="18.0"/>
+                        </font>
+                    </Label>
 
                     <GridPane hgap="15" vgap="15">
                         <!-- Price per Night -->
                         <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5">
-                            <Label text="Price per Night (PKR) *" style="-fx-font-weight: bold;"/>
+                            <Label text="Price per Night (PKR) *" styleClass="label-bold"/>
                             <TextField fx:id="priceField"
                                       promptText="e.g., 15000"
                                       style="-fx-padding: 10;"/>
@@ -95,7 +114,7 @@
 
                         <!-- Max Guests -->
                         <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
-                            <Label text="Maximum Guests *" style="-fx-font-weight: bold;"/>
+                            <Label text="Maximum Guests *" styleClass="label-bold"/>
                             <TextField fx:id="maxGuestsField"
                                       promptText="e.g., 6"
                                       style="-fx-padding: 10;"/>
@@ -103,7 +122,7 @@
 
                         <!-- Bedrooms -->
                         <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="5">
-                            <Label text="Number of Bedrooms *" style="-fx-font-weight: bold;"/>
+                            <Label text="Number of Bedrooms *" styleClass="label-bold"/>
                             <TextField fx:id="bedroomsField"
                                       promptText="e.g., 3"
                                       style="-fx-padding: 10;"/>
@@ -111,7 +130,7 @@
 
                         <!-- Bathrooms -->
                         <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="5">
-                            <Label text="Number of Bathrooms *" style="-fx-font-weight: bold;"/>
+                            <Label text="Number of Bathrooms *" styleClass="label-bold"/>
                             <TextField fx:id="bathroomsField"
                                       promptText="e.g., 2"
                                       style="-fx-padding: 10;"/>
@@ -121,9 +140,13 @@
                 </VBox>
 
                 <!-- Amenities -->
-                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
-                    <Label text="Amenities" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-                    <Label text="Select available amenities:" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                <VBox spacing="15" styleClass="content-card">
+                    <Label text="✨ Amenities" styleClass="subsection-title">
+                        <font>
+                            <Font name="Poppins" size="18.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Select available amenities:" styleClass="subtitle"/>
                     
                     <!-- Amenities will be loaded dynamically as checkboxes -->
                     <VBox fx:id="amenitiesContainer" spacing="8" style="-fx-padding: 10;"/>
@@ -144,6 +167,7 @@
                        style="-fx-text-fill: #e74c3c; -fx-font-size: 12px; -fx-font-style: italic;"/>
 
             </VBox>
+            </HBox>
         </ScrollPane>
     </center>
 

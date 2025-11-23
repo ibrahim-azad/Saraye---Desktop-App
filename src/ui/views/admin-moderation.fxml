@@ -10,55 +10,57 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="ui.controllers.AdminModerationController"
       spacing="20"
-      style="-fx-padding: 30; -fx-background-color: #f5f5f5;">
+      styleClass="root"
+      stylesheets="@../../resources/css/style.css"
+      style="-fx-padding: 30;">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="20">
         <VBox spacing="5" HBox.hgrow="ALWAYS">
-            <Label text="Report Moderation" style="-fx-font-size: 28px; -fx-font-weight: bold;">
+            <Label text="Report Moderation" styleClass="page-title">
                 <font>
-                    <Font name="System Bold" size="28.0"/>
+                    <Font name="Poppins" size="28.0"/>
                 </font>
             </Label>
             <Label text="Review and manage user-submitted reports"
-                   style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+                   styleClass="subtitle"/>
         </VBox>
 
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Button text="Refresh" onAction="#handleRefresh"
-                    style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                    styleClass="button-secondary"/>
             <Button text="Back to Dashboard" onAction="#handleBackToDashboard"
-                    style="-fx-background-color: #757575; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                    styleClass="button-neutral"/>
         </HBox>
     </HBox>
 
     <!-- Statistics Cards -->
     <HBox spacing="15" alignment="CENTER">
-        <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #fff3cd; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #ffc107; -fx-border-width: 2; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
-            <Label fx:id="pendingCountLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #ff9800;">
+        <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #FFF9E6; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #FFD93D; -fx-border-width: 2; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+            <Label fx:id="pendingCountLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #F4C542;">
                 <font>
-                    <Font name="System Bold" size="32.0"/>
+                    <Font name="Poppins" size="32.0"/>
                 </font>
             </Label>
-            <Label text="Pending Reports" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+            <Label text="Pending Reports" styleClass="subtitle"/>
         </VBox>
 
-        <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #d4edda; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #28a745; -fx-border-width: 2; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
-            <Label fx:id="resolvedCountLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #28a745;">
+        <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #E8F8EB; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #6BCF7F; -fx-border-width: 2; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+            <Label fx:id="resolvedCountLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #6BCF7F;">
                 <font>
-                    <Font name="System Bold" size="32.0"/>
+                    <Font name="Poppins" size="32.0"/>
                 </font>
             </Label>
-            <Label text="Resolved Today" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+            <Label text="Resolved Today" styleClass="subtitle"/>
         </VBox>
 
-        <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #f8d7da; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #dc3545; -fx-border-width: 2; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
-            <Label fx:id="totalCountLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #dc3545;">
+        <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #FFE9E9; -fx-padding: 20; -fx-background-radius: 10; -fx-border-color: #FF6B6B; -fx-border-width: 2; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+            <Label fx:id="totalCountLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #FF6B6B;">
                 <font>
-                    <Font name="System Bold" size="32.0"/>
+                    <Font name="Poppins" size="32.0"/>
                 </font>
             </Label>
-            <Label text="Total Reports" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+            <Label text="Total Reports" styleClass="subtitle"/>
         </VBox>
     </HBox>
 
@@ -72,27 +74,27 @@
 
         <TableView fx:id="reportsTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn text="Report ID" prefWidth="120">
+                <TableColumn fx:id="reportIDColumn" text="Report ID" prefWidth="120">
                     <cellValueFactory>
                         <PropertyValueFactory property="reportID"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Property ID" prefWidth="100">
+                <TableColumn fx:id="propertyIdColumn" text="Property ID" prefWidth="100">
                     <cellValueFactory>
                         <PropertyValueFactory property="propertyId"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Reporter ID" prefWidth="100">
+                <TableColumn fx:id="reporterIdColumn" text="Reporter ID" prefWidth="100">
                     <cellValueFactory>
                         <PropertyValueFactory property="reporterId"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Description" prefWidth="350">
+                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="350">
                     <cellValueFactory>
                         <PropertyValueFactory property="description"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Status" prefWidth="80">
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="80">
                     <cellValueFactory>
                         <PropertyValueFactory property="status"/>
                     </cellValueFactory>

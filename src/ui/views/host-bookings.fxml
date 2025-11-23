@@ -4,20 +4,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.HostBookingsController"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="root"
+            stylesheets="@../../resources/css/style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
-            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <HBox styleClass="header-bar" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
             <Region HBox.hgrow="ALWAYS"/>
             <Button text="← Back to Dashboard"
                     onAction="#handleBack"
-                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="back-button"/>
         </HBox>
     </top>
 
@@ -26,8 +32,8 @@
         <VBox spacing="20" style="-fx-padding: 20;">
 
             <!-- Header Section -->
-            <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
-                <Label text="Booking Requests" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <VBox spacing="15" styleClass="content-card">
+                <Label text="Booking Requests" styleClass="section-title"/>
 
                 <!-- Filter Buttons -->
                 <HBox spacing="10" alignment="CENTER_LEFT">

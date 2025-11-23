@@ -242,10 +242,14 @@ public class ProfileController {
 
         // Navigate to appropriate dashboard based on role
         String role = currentUser.getRole();
-        if ("host".equalsIgnoreCase(role)) {
+        if ("ADMIN".equalsIgnoreCase(role)) {
+            NavigationUtil.navigateTo("admin-dashboard.fxml", currentUser);
+        } else if ("host".equalsIgnoreCase(role)) {
+            NavigationUtil.navigateTo("host-dashboard.fxml", currentUser);
+        } else if ("both".equalsIgnoreCase(role)) {
             NavigationUtil.navigateTo("host-dashboard.fxml", currentUser);
         } else {
-            // Default to guest dashboard for guest or both roles
+            // Default to guest dashboard for guest role
             NavigationUtil.navigateTo("guest-dashboard.fxml", currentUser);
         }
     }

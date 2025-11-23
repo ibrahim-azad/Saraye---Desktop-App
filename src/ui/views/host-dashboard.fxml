@@ -4,20 +4,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.HostDashboardController"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="root"
+            stylesheets="@../../resources/css/style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
-            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;">
-                <font>
-                    <Font name="System Bold" size="24.0"/>
-                </font>
-            </Label>
+        <HBox styleClass="header-bar" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
 
             <Region HBox.hgrow="ALWAYS"/>
 
@@ -25,11 +27,11 @@
 
             <Button text="My Profile"
                     onAction="#handleProfile"
-                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="back-button"/>
 
             <Button text="Logout"
                     onAction="#handleLogout"
-                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="button-danger"/>
         </HBox>
     </top>
 
@@ -39,12 +41,12 @@
 
             <!-- Welcome Section -->
             <VBox alignment="CENTER" spacing="10">
-                <Label text="Host Dashboard" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                <Label text="Host Dashboard" styleClass="page-title">
                     <font>
-                        <Font name="System Bold" size="32.0"/>
+                        <Font name="Poppins" size="32.0"/>
                     </font>
                 </Label>
-                <Label text="Manage your properties and bookings" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;"/>
+                <Label text="Manage your properties and bookings" styleClass="subtitle"/>
             </VBox>
 
             <!-- Action Cards -->
@@ -54,116 +56,88 @@
                 <VBox GridPane.columnIndex="0" GridPane.rowIndex="0"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="➕" style="-fx-font-size: 48px;"/>
-                    <Label text="Add Property" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="➕ Add Property" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
                     <Label text="List a new property for rent"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="Add New Property"
                             onAction="#handleAddProperty"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-primary"/>
                 </VBox>
 
                 <!-- My Properties Card -->
                 <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="🏠" style="-fx-font-size: 48px;"/>
-                    <Label text="My Properties" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="🏠 My Properties" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
                     <Label text="View and manage your listings"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="View Properties"
                             onAction="#handleMyProperties"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-secondary"/>
                 </VBox>
 
                 <!-- Booking Requests Card -->
                 <VBox GridPane.columnIndex="0" GridPane.rowIndex="1"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="📋" style="-fx-font-size: 48px;"/>
-                    <Label text="Booking Requests" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="📋 Booking Requests" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
-                    <Label text="Approve or decline bookings"
+                    <Label text="Approve or decline booking requests"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="View Requests"
                             onAction="#handleBookingRequests"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-accent"/>
                 </VBox>
 
                 <!-- Switch to Guest Card -->
                 <VBox GridPane.columnIndex="1" GridPane.rowIndex="1"
                       spacing="15"
                       alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
+                      styleClass="content-card"
                       minWidth="250" minHeight="200">
 
-                    <Label text="🔄" style="-fx-font-size: 48px;"/>
-                    <Label text="Switch to Guest" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                    <Label text="🔄 Switch to Guest" styleClass="subsection-title">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="Poppins" size="18.0"/>
                         </font>
                     </Label>
                     <Label text="Browse properties as a guest"
                            wrapText="true"
                            textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
+                           styleClass="subtitle"/>
                     <Button text="Switch Mode"
                             onAction="#handleSwitchToGuest"
                             maxWidth="Infinity"
-                            style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
-                </VBox>
-
-                <!-- Moderation Card -->
-                <VBox GridPane.columnIndex="0" GridPane.rowIndex="2"
-                      spacing="15"
-                      alignment="CENTER"
-                      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);"
-                      minWidth="250" minHeight="200"
-                      GridPane.columnSpan="2">
-
-                    <Label text="⚠️" style="-fx-font-size: 48px;"/>
-                    <Label text="Report Moderation" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
-                        <font>
-                            <Font name="System Bold" size="18.0"/>
-                        </font>
-                    </Label>
-                    <Label text="Review and manage user-submitted reports"
-                           wrapText="true"
-                           textAlignment="CENTER"
-                           style="-fx-text-fill: #7f8c8d;"/>
-                    <Button text="View Reports"
-                            onAction="#handleModeration"
-                            maxWidth="Infinity"
-                            style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-warning"/>
                 </VBox>
 
             </GridPane>
@@ -173,7 +147,7 @@
 
     <!-- Bottom Bar -->
     <bottom>
-        <HBox style="-fx-background-color: #34495e; -fx-padding: 10;" alignment="CENTER">
+        <HBox style="-fx-background-color: linear-gradient(to right, #8B6F47, #A0826D); -fx-padding: 10;" alignment="CENTER">
             <Label text="© 2025 Saraye - Property Rental Platform" style="-fx-text-fill: white;"/>
         </HBox>
     </bottom>

@@ -4,63 +4,60 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="ui.controllers.GuestBookingsController" styleClass="root"
-    stylesheets="@../resources/css/style.css">
+    stylesheets="@../../resources/css/style.css">
 
-    <!-- Top Section - Header -->
+    <!-- Top Bar -->
     <top>
-        <VBox spacing="10" styleClass="header-section">
-            <padding>
-                <Insets top="20" right="30" bottom="20" left="30" />
-            </padding>
-
-            <!-- Title and Back Button -->
-            <HBox alignment="CENTER_LEFT" spacing="15">
-                <Button text="← Back" onAction="#handleBack" styleClass="back-button" />
-                <Label text="My Bookings" styleClass="page-title">
-                    <font>
-                        <Font name="System Bold" size="28" />
-                    </font>
-                </Label>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button text="🔄 Refresh" onAction="#handleRefresh" styleClass="primary-button" />
-            </HBox>
-
-            <!-- Subtitle -->
-            <Label text="View and manage your property bookings" styleClass="subtitle">
-                <font>
-                    <Font size="14" />
-                </font>
-            </Label>
-        </VBox>
+        <HBox styleClass="header-bar-secondary" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="← Back to Dashboard"
+                    onAction="#handleBack"
+                    styleClass="back-button"/>
+            <Button text="Refresh"
+                    onAction="#handleRefresh"
+                    styleClass="back-button"/>
+        </HBox>
     </top>
 
     <!-- Center Section - Bookings Table -->
     <center>
-        <VBox spacing="15" styleClass="content-section">
-            <padding>
-                <Insets top="20" right="30" bottom="20" left="30" />
-            </padding>
+        <VBox spacing="20" style="-fx-padding: 30;">
 
-            <!-- Booking Count Label -->
-            <HBox alignment="CENTER_LEFT">
-                <Label fx:id="bookingCountLabel" text="Loading bookings..." styleClass="info-label">
-                    <font>
-                        <Font size="14" />
-                    </font>
-                </Label>
-            </HBox>
+            <!-- Page Title -->
+            <VBox spacing="10">
+                <Label text="📅 My Bookings" styleClass="page-title"/>
+                <Label text="View and manage your property bookings" styleClass="subtitle"/>
+            </VBox>
+
+            <!-- Bookings Content -->
+            <VBox spacing="15" styleClass="content-card">
+
+                <!-- Booking Count Label -->
+                <HBox alignment="CENTER_LEFT">
+                    <Label fx:id="bookingCountLabel" text="Loading bookings..." styleClass="label-bold">
+                        <font>
+                            <Font size="14" />
+                        </font>
+                    </Label>
+                </HBox>
 
             <!-- Bookings Table -->
             <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS" styleClass="table-view">
                 <columns>
-                    <TableColumn fx:id="bookingIdColumn" text="Booking ID" prefWidth="120" />
-                    <TableColumn fx:id="propertyIdColumn" text="Property ID" prefWidth="120" />
-                    <TableColumn fx:id="checkInColumn" text="Check-In" prefWidth="120" />
-                    <TableColumn fx:id="checkOutColumn" text="Check-Out" prefWidth="120" />
-                    <TableColumn fx:id="totalPriceColumn" text="Total Price (PKR)" prefWidth="130" />
+                    <TableColumn fx:id="bookingIdColumn" text="Booking ID" prefWidth="100" />
+                    <TableColumn fx:id="propertyTitleColumn" text="Property" prefWidth="180" />
+                    <TableColumn fx:id="checkInColumn" text="Check-In" prefWidth="100" />
+                    <TableColumn fx:id="checkOutColumn" text="Check-Out" prefWidth="100" />
+                    <TableColumn fx:id="totalPriceColumn" text="Total (PKR)" prefWidth="100" />
                     <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
                     <TableColumn fx:id="actionColumn" text="Action" prefWidth="100" />
                 </columns>
@@ -81,13 +78,29 @@
                     </font>
                 </Label>
 
-                <Label
-                    text="• PENDING - Waiting for host approval\n• APPROVED - Confirmed by host\n• CANCELLED - Cancelled by you\n• DECLINED - Declined by host"
-                    styleClass="info-text" wrapText="true">
-                    <font>
-                        <Font size="12" />
-                    </font>
-                </Label>
+                <VBox spacing="5">
+                    <Label text="• PENDING - Waiting for host approval" styleClass="info-text">
+                        <font>
+                            <Font size="12"/>
+                        </font>
+                    </Label>
+                    <Label text="• APPROVED - Confirmed by host" styleClass="info-text">
+                        <font>
+                            <Font size="12"/>
+                        </font>
+                    </Label>
+                    <Label text="• CANCELLED - Cancelled by you" styleClass="info-text">
+                        <font>
+                            <Font size="12"/>
+                        </font>
+                    </Label>
+                    <Label text="• DECLINED - Declined by host" styleClass="info-text">
+                        <font>
+                            <Font size="12"/>
+                        </font>
+                    </Label>
+                </VBox>
+
 
                 <Label text="💡 You can only cancel PENDING or APPROVED bookings." styleClass="info-text"
                     wrapText="true">
@@ -95,6 +108,7 @@
                         <Font size="12" />
                     </font>
                 </Label>
+            </VBox>
             </VBox>
         </VBox>
     </center>

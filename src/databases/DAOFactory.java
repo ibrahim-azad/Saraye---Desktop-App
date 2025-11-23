@@ -19,7 +19,7 @@ public class DAOFactory {
      * true = Use mock DAOs (no database required)
      * false = Use real DAOs (requires MS SQL Server connection)
      */
-    public static final boolean UI_ONLY_MODE = true;
+    public static final boolean UI_ONLY_MODE = false;
 
     // Singleton instances for mock DAOs (to maintain state across the app in
     // UI-only mode)

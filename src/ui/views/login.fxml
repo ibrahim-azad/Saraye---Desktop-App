@@ -4,62 +4,74 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ui.controllers.LoginController"
-      alignment="CENTER"
-      spacing="20"
-      style="-fx-background-color: #f5f5f5; -fx-padding: 40;">
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="ui.controllers.LoginController"
+           stylesheets="@../../resources/css/style.css">
 
-    <!-- Logo/Title Section -->
-    <VBox alignment="CENTER" spacing="10">
-        <Label text="SARAYE" style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
-            <font>
-                <Font name="System Bold" size="48.0"/>
-            </font>
-        </Label>
-        <Label text="Property Rental Platform" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;"/>
+    <!-- Background Image -->
+    <ImageView fitWidth="1280" fitHeight="720" preserveRatio="false">
+        <image>
+            <Image url="/resources/images/sarayebackground.jpg"/>
+        </image>
+    </ImageView>
+
+    <!-- Semi-transparent overlay -->
+    <StackPane style="-fx-background-color: rgba(245, 241, 232, 0.85);"/>
+
+    <!-- Content -->
+    <VBox alignment="CENTER" spacing="20" style="-fx-padding: 40;">
+
+        <!-- Logo/Title Section -->
+        <VBox alignment="CENTER" spacing="10">
+            <ImageView fitWidth="200" fitHeight="80" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
+            <Label text="Property Rental Platform" styleClass="subtitle"/>
     </VBox>
 
     <!-- Login Form Card -->
-    <VBox spacing="20" maxWidth="400" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 40; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+    <VBox spacing="20" maxWidth="400" styleClass="content-card">
 
-        <Label text="Welcome Back!" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+        <Label text="💎 Welcome Back!" styleClass="section-title">
             <font>
-                <Font name="System Bold" size="24.0"/>
+                <Font name="Poppins" size="24.0"/>
             </font>
         </Label>
 
-        <Label text="Sign in to continue" style="-fx-font-size: 14px; -fx-text-fill: #95a5a6;"/>
+        <Label text="Sign in to continue" styleClass="subtitle"/>
 
         <!-- Email Field -->
         <VBox spacing="8">
-            <Label text="Email Address" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <Label text="👤 Email Address" styleClass="label-bold"/>
             <TextField fx:id="emailField"
                        promptText="Enter your email"
-                       style="-fx-padding: 12; -fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;"/>
+                       styleClass="text-field"/>
         </VBox>
 
         <!-- Password Field -->
         <VBox spacing="8">
-            <Label text="Password" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <Label text="🔒 Password" styleClass="label-bold"/>
             <PasswordField fx:id="passwordField"
                           promptText="Enter your password"
-                          style="-fx-padding: 12; -fx-background-radius: 5; -fx-border-color: #dcdcdc; -fx-border-radius: 5;"/>
+                          styleClass="password-field"/>
         </VBox>
 
         <!-- Error Label -->
         <Label fx:id="errorLabel"
                visible="false"
                wrapText="true"
-               style="-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-padding: 10; -fx-background-color: #fadbd8; -fx-background-radius: 5;"/>
+               styleClass="error-box"/>
 
         <!-- Login Button -->
         <Button text="Login"
                 onAction="#handleLogin"
                 maxWidth="Infinity"
-                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 14; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;">
+                styleClass="button-primary">
             <font>
                 <Font size="16.0"/>
             </font>
@@ -82,11 +94,13 @@
 
     </VBox>
 
-    <!-- Footer -->
-    <Label text="© 2025 Saraye - By Cactus Team" style="-fx-text-fill: #95a5a6; -fx-font-size: 12px;">
-        <VBox.margin>
-            <Insets top="20"/>
-        </VBox.margin>
-    </Label>
+        <!-- Footer -->
+        <Label text="© 2025 Saraye - By Cactus Team" style="-fx-text-fill: #8B7355; -fx-font-size: 12px;">
+            <VBox.margin>
+                <Insets top="20"/>
+            </VBox.margin>
+        </Label>
 
-</VBox>
+    </VBox>
+
+</StackPane>

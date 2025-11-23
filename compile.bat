@@ -26,9 +26,11 @@ if %ERRORLEVEL% NEQ 0 (
 REM Copy resources
 echo Copying resources...
 mkdir bin\ui\views
-mkdir bin\css
+mkdir bin\resources\css
+mkdir bin\resources\images
 xcopy /Y src\ui\views\*.fxml bin\ui\views\
-xcopy /Y resources\css\*.css bin\css\
+xcopy /Y resources\css\*.css bin\resources\css\
+xcopy /Y resources\images\*.* bin\resources\images\
 
 echo.
 echo [SUCCESS] Compilation completed successfully!

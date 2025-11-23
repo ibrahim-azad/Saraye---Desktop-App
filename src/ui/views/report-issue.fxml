@@ -10,17 +10,19 @@
       fx:controller="ui.controllers.ReportIssueController"
       alignment="TOP_CENTER"
       spacing="20"
-      style="-fx-padding: 30; -fx-background-color: #f5f5f5;">
+      styleClass="root"
+      stylesheets="@../../resources/css/style.css"
+      style="-fx-padding: 30;">
 
     <!-- Header -->
     <VBox alignment="CENTER" spacing="10">
-        <Label text="Report Issue" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #d32f2f;">
+        <Label text="Report Issue" styleClass="page-title" style="-fx-text-fill: #FF6B6B;">
             <font>
-                <Font name="System Bold" size="28.0"/>
+                <Font name="Poppins" size="28.0"/>
             </font>
         </Label>
         <Label text="Help us maintain a safe and trustworthy community"
-               style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+               styleClass="subtitle"/>
     </VBox>
 
     <!-- Form Container -->

@@ -14,11 +14,26 @@ import java.util.List;
 
 public class AdminModerationController {
 
-    @FXML private TableView<Report> reportsTable;
-    @FXML private TableColumn<Report, String> actionColumn;
-    @FXML private Label pendingCountLabel;
-    @FXML private Label resolvedCountLabel;
-    @FXML private Label totalCountLabel;
+    @FXML
+    private TableView<Report> reportsTable;
+    @FXML
+    private TableColumn<Report, String> reportIDColumn;
+    @FXML
+    private TableColumn<Report, String> propertyIdColumn;
+    @FXML
+    private TableColumn<Report, String> reporterIdColumn;
+    @FXML
+    private TableColumn<Report, String> descriptionColumn;
+    @FXML
+    private TableColumn<Report, String> statusColumn;
+    @FXML
+    private TableColumn<Report, String> actionColumn;
+    @FXML
+    private Label pendingCountLabel;
+    @FXML
+    private Label resolvedCountLabel;
+    @FXML
+    private Label totalCountLabel;
 
     private User currentUser;
     private ModerationController moderationController;
@@ -28,6 +43,13 @@ public class AdminModerationController {
     private void initialize() {
         moderationController = ModerationController.getInstance();
 
+        // Initialize table columns
+        reportIDColumn.setCellValueFactory(new PropertyValueFactory<>("reportID"));
+        propertyIdColumn.setCellValueFactory(new PropertyValueFactory<>("propertyId"));
+        reporterIdColumn.setCellValueFactory(new PropertyValueFactory<>("reporterId"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
         // Setup action column with buttons
         actionColumn.setCellFactory(param -> new TableCell<Report, String>() {
             private final Button viewDetailsBtn = new Button("View Details");
@@ -35,8 +57,10 @@ public class AdminModerationController {
             private final HBox hbox = new HBox(5, viewDetailsBtn, resolveBtn);
 
             {
-                viewDetailsBtn.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 11px; -fx-padding: 5 10;");
-                resolveBtn.setStyle("-fx-background-color: #4caf50; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 11px; -fx-padding: 5 10;");
+                viewDetailsBtn.setStyle(
+                        "-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 11px; -fx-padding: 5 10;");
+                resolveBtn.setStyle(
+                        "-fx-background-color: #4caf50; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 11px; -fx-padding: 5 10;");
 
                 viewDetailsBtn.setOnAction(event -> {
                     Report report = getTableView().getItems().get(getIndex());
@@ -74,17 +98,26 @@ public class AdminModerationController {
     }
 
     private void loadReports() {
-        List<Report> reports = moderationController.getPendingReports();
+        try {
+            List<Report> reports = moderationController.getPendingReports();
 
-        if (reports != null) {
-            reportsTable.getItems().clear();
-            reportsTable.getItems().addAll(reports);
+            if (reports != null) {
+                reportsTable.getItems().clear();
+                reportsTable.getItems().addAll(reports);
 
-            // Update statistics
-            pendingCountLabel.setText(String.valueOf(reports.size()));
-            totalCountLabel.setText(String.valueOf(reports.size() + resolvedTodayCount));
-        } else {
-            AlertUtil.showError("Error", "Failed to load reports");
+                // Update statistics
+                pendingCountLabel.setText(String.valueOf(reports.size()));
+                totalCountLabel.setText(String.valueOf(reports.size() + resolvedTodayCount));
+
+                System.out.println("Loaded " + reports.size() + " reports");
+            } else {
+                System.out.println("No reports returned from controller");
+                AlertUtil.showError("Error", "Failed to load reports");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading reports: " + e.getMessage());
+            e.printStackTrace();
+            AlertUtil.showError("Error", "Failed to load reports: " + e.getMessage());
         }
     }
 
@@ -106,10 +139,10 @@ public class AdminModerationController {
 
     private void handleViewDetails(Report report) {
         String details = "Report ID: " + report.getReportID() + "\n\n" +
-                        "Property ID: " + report.getPropertyId() + "\n" +
-                        "Reporter ID: " + report.getReporterId() + "\n\n" +
-                        "Description:\n" + report.getDescription() + "\n\n" +
-                        "Status: " + report.getStatus();
+                "Property ID: " + report.getPropertyId() + "\n" +
+                "Reporter ID: " + report.getReporterId() + "\n\n" +
+                "Description:\n" + report.getDescription() + "\n\n" +
+                "Status: " + report.getStatus();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Report Details");
@@ -125,7 +158,7 @@ public class AdminModerationController {
         confirmAlert.setTitle("Resolve Report");
         confirmAlert.setHeaderText("Are you sure you want to resolve this report?");
         confirmAlert.setContentText("Report ID: " + report.getReportID() + "\n" +
-                                   "This action will mark the report as resolved.");
+                "This action will mark the report as resolved.");
 
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
@@ -133,7 +166,7 @@ public class AdminModerationController {
 
                 if ("SUCCESS".equals(result)) {
                     AlertUtil.showSuccess("Report Resolved",
-                        "The report has been marked as resolved successfully.");
+                            "The report has been marked as resolved successfully.");
 
                     // Update statistics
                     resolvedTodayCount++;

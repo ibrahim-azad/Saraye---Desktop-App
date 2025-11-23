@@ -27,7 +27,7 @@ public class GuestBookingsController {
     private TableColumn<Booking, String> bookingIdColumn;
 
     @FXML
-    private TableColumn<Booking, String> propertyIdColumn;
+    private TableColumn<Booking, String> propertyTitleColumn;
 
     @FXML
     private TableColumn<Booking, String> checkInColumn;
@@ -66,7 +66,7 @@ public class GuestBookingsController {
     private void initialize() {
         // Setup table columns
         bookingIdColumn.setCellValueFactory(new PropertyValueFactory<>("bookingID"));
-        propertyIdColumn.setCellValueFactory(new PropertyValueFactory<>("propertyID"));
+        propertyTitleColumn.setCellValueFactory(new PropertyValueFactory<>("propertyTitle"));
         checkInColumn.setCellValueFactory(new PropertyValueFactory<>("checkInDate"));
         checkOutColumn.setCellValueFactory(new PropertyValueFactory<>("checkOutDate"));
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));

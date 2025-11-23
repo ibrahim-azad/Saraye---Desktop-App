@@ -4,20 +4,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.SearchPropertiesController"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="root"
+            stylesheets="@../../resources/css/style.css">
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
-            <Label text="SARAYE" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <HBox styleClass="header-bar" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                <image>
+                    <Image url="/resources/images/sarayebanner.png"/>
+                </image>
+            </ImageView>
             <Region HBox.hgrow="ALWAYS"/>
             <Button text="← Back to Dashboard"
                     onAction="#handleBack"
-                    style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 5;"/>
+                    styleClass="back-button"/>
         </HBox>
     </top>
 
@@ -26,27 +32,27 @@
         <VBox spacing="20" style="-fx-padding: 20;">
 
             <!-- Search Form -->
-            <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+            <VBox spacing="15" styleClass="content-card">
 
-                <Label text="Search Properties" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <Label text="🔍 Search Properties" styleClass="section-title"/>
 
                 <GridPane hgap="15" vgap="15">
 
                     <!-- City -->
                     <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="5">
-                        <Label text="City" style="-fx-font-weight: bold;"/>
+                        <Label text="📍 City" style="-fx-font-weight: bold;"/>
                         <TextField fx:id="cityField" promptText="e.g., Lahore, Karachi" style="-fx-padding: 10;"/>
                     </VBox>
 
                     <!-- Check-in Date -->
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
-                        <Label text="Check-in Date" style="-fx-font-weight: bold;"/>
+                        <Label text="📅 Check-in Date" style="-fx-font-weight: bold;"/>
                         <DatePicker fx:id="checkInDatePicker" promptText="Select date" style="-fx-padding: 8;"/>
                     </VBox>
 
                     <!-- Check-out Date -->
                     <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" spacing="5">
-                        <Label text="Check-out Date" style="-fx-font-weight: bold;"/>
+                        <Label text="📅 Check-out Date" style="-fx-font-weight: bold;"/>
                         <DatePicker fx:id="checkOutDatePicker" promptText="Select date" style="-fx-padding: 8;"/>
                     </VBox>
 
@@ -73,10 +79,10 @@
                 <HBox spacing="10" alignment="CENTER_RIGHT">
                     <Button text="Clear Filters"
                             onAction="#handleClearFilters"
-                            style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 5;"/>
+                            styleClass="button-neutral"/>
                     <Button text="Search"
                             onAction="#handleSearch"
-                            style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 30; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                            styleClass="button-primary"/>
                 </HBox>
 
             </VBox>

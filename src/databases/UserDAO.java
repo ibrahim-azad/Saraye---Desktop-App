@@ -156,8 +156,8 @@ public class UserDAO {
                 String userID = rs.getString("userID");
                 String name = rs.getString("name");
                 String email = rs.getString("email");
-                String password = rs.getString("password");
-                String phone = rs.getString("phone");
+                String password = rs.getString("passwordHash");
+                String phone = rs.getString("phoneNumber");
                 String role = rs.getString("role");
 
                 User user = null;
